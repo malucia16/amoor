@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felices 2 Meses Daniel 💕</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0010;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Georgia', serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+  }
+  canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 0; }
+  .content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    animation: fadeIn 2s ease forwards;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .badge {
+    display: inline-block;
+    background: rgba(255,100,150,0.18);
+    border: 1px solid rgba(255,120,160,0.4);
+    color: #ffb3cc;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+  .main-title {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0 40px rgba(255,100,150,0.5);
+  }
+  .main-title span { color: #ff6b9d; font-weight: 600; }
+  .subtitle {
+    font-size: 1rem;
+    color: rgba(255,180,200,0.7);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.08em;
+  }
+  .heart-container {
+    position: relative;
+    width: 160px;
+    height: 150px;
+    margin: 0 auto 2.5rem;
+  }
+  .big-heart {
+    font-size: 120px;
+    line-height: 1;
+    filter: drop-shadow(0 0 30px rgba(255,80,120,0.8));
+    animation: heartBeat 1.4s ease-in-out infinite;
+    display: block;
+    text-align: center;
+  }
+  @keyframes heartBeat {
+    0%,100% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.08); }
+    70% { transform: scale(1); }
+  }
+  .message-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,120,160,0.25);
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    max-width: 340px;
+    margin: 0 auto 2rem;
+    backdrop-filter: blur(10px);
+  }
+  .message-line {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .message-line.highlight {
+    font-size: 1.4rem;
+    color: #ff6b9d;
+    font-weight: 600;
+    text-shadow: 0 0 20px rgba(255,107,157,0.6);
+    margin-top: 0.8rem;
+  }
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,120,160,0.6), transparent);
+    margin: 1rem auto;
+  }
+  .counter-section {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .counter-item {
+    text-align: center;
+    background: rgba(255,100,150,0.1);
+    border: 1px solid rgba(255,120,160,0.2);
+    border-radius: 14px;
+    padding: 1rem 1.4rem;
+    min-width: 80px;
+  }
+  .counter-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ff6b9d;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(255,107,157,0.5);
+  }
+  .counter-label {
+    font-size: 0.65rem;
+    color: rgba(255,180,200,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.3rem;
+  }
+  .footer-msg {
+    font-size: 0.85rem;
+    color: rgba(255,180,200,0.5);
+    font-style: italic;
+    letter-spacing: 0.05em;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  .sparkles {
+    position: fixed;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .sparkle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: #ff6b9d;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) var(--delay, 0s) ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+<div class="sparkles" id="sparkles"></div>
+
+<div class="content">
+  <div class="badge">✦ 2 meses juntos ✦</div>
+  
+  <h1 class="main-title">Felices <span>2 Meses</span></h1>
+  <p class="subtitle">Amor mío 🌸</p>
+
+  <div class="heart-container">
+    <span class="big-heart">💗</span>
+  </div>
+
+  <div class="message-card">
+    <p class="message-line">Cada día contigo es</p>
+    <p class="message-line">el más especial de mi vida.</p>
+    <div class="divider"></div>
+    <p class="message-line highlight">Te amo Daniel Mahecha</p>
+    <div class="divider"></div>
+    <p class="message-line" style="font-size:0.9rem; color:rgba(255,200,215,0.7); margin-top:0.5rem;">
+      ...y este es solo el comienzo 🌹
+    </p>
+    <p class="message-line" style="font-size:0.7rem; color:rgba(255,200,215,0.7); margin-top:0.5rem;">
+      22 de abril del 2026
+    </p>
+  </div>
+
+  <div class="counter-section">
+    <div class="counter-item">
+      <div class="counter-number">2</div>
+      <div class="counter-label">meses</div>
+    </div>
+    <div class="counter-item">
+      <div class="counter-number" id="days-count">60</div>
+      <div class="counter-label">días</div>
+    </div>
+    <div class="counter-item">
+      <div class="counter-number">∞</div>
+      <div class="counter-label">amor</div>
+    </div>
+  </div>
+
+  <p class="footer-msg">con todo mi corazón, solo para ti 💕</p>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H, hearts = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function Heart(x, y, size, speed, opacity) {
+  this.x = x;
+  this.y = y;
+  this.size = size;
+  this.speed = speed;
+  this.opacity = opacity;
+  this.sway = Math.random() * 2 - 1;
+  this.swaySpeed = 0.01 + Math.random() * 0.02;
+  this.t = Math.random() * Math.PI * 2;
+  this.color = ['#ff6b9d','#ff9ec4','#ff4d79','#ffb3cc','#e0407a'][Math.floor(Math.random()*5)];
+}
+
+Heart.prototype.draw = function() {
+  ctx.save();
+  ctx.globalAlpha = this.opacity;
+  ctx.font = `${this.size}px serif`;
+  ctx.fillStyle = this.color;
+  ctx.shadowColor = this.color;
+  ctx.shadowBlur = 15;
+  ctx.fillText('💗', this.x, this.y);
+  ctx.restore();
+};
+
+Heart.prototype.update = function() {
+  this.t += this.swaySpeed;
+  this.x += Math.sin(this.t) * this.sway;
+  this.y -= this.speed;
+  this.opacity -= 0.002;
+  if (this.y < -50 || this.opacity <= 0) {
+    this.y = H + 50;
+    this.x = Math.random() * W;
+    this.opacity = 0.4 + Math.random() * 0.5;
+  }
+};
+
+function init() {
+  hearts = [];
+  for (let i = 0; i < 50; i++) {
+    hearts.push(new Heart(
+      Math.random() * W,
+      Math.random() * H,
+      12 + Math.random() * 22,
+      0.3 + Math.random() * 0.8,
+      0.3 + Math.random() * 0.6
+    ));
+  }
+}
+
+function loop() {
+  ctx.clearRect(0, 0, W, H);
+  hearts.forEach(h => { h.update(); h.draw(); });
+  requestAnimationFrame(loop);
+}
+
+window.addEventListener('resize', () => { resize(); init(); });
+resize(); init(); loop();
+
+// Sparkles
+const sparklesEl = document.getElementById('sparkles');
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 100 + '%';
+  s.style.setProperty('--d', (2 + Math.random() * 4) + 's');
+  s.style.setProperty('--delay', (Math.random() * 4) + 's');
+  sparklesEl.appendChild(s);
+}
+</script>
+</body>
+</html>
