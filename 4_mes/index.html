@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felices 4 Meses Daniel 💛</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  width:100%;height:100%;
+  background:#f3eadf;
+  font-family:Georgia,serif;
+  overflow:hidden;
+}
+
+/* INTRO */
+#intro{
+  position:fixed;inset:0;background:#f3eadf;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:100;gap:2rem;transition:opacity 0.8s;
+}
+#intro.hide{opacity:0;pointer-events:none;}
+
+.sunflower-intro{
+  width:90px;height:90px;position:relative;
+  animation:spinSlow 8s linear infinite;
+}
+
+@keyframes spinSlow{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.petal-i{position:absolute;width:18px;height:36px;background:#f5c518;border-radius:50% 50% 40% 40%;left:50%;top:50%;transform-origin:bottom center;}
+.center-i{position:absolute;width:30px;height:30px;background:#3d1f00;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;}
+.intro-text{text-align:center;color:#5a3e00;font-size:1.1rem;font-style:italic;line-height:1.6;}
+.intro-title{font-size:1.5rem;font-weight:700;color:#c47a00;margin-bottom:0.3rem;letter-spacing:0.05em;}
+.btn-start{
+  background:#f5c518;border:none;color:#3d1f00;
+  font-family:Georgia,serif;font-size:1rem;font-weight:700;
+  padding:0.8rem 2.5rem;border-radius:50px;cursor:pointer;
+  letter-spacing:0.1em;box-shadow:0 4px 20px rgba(245,197,24,0.4);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-start:hover{transform:scale(1.05);box-shadow:0 6px 28px rgba(245,197,24,0.5);}
+
+/* ESCENA */
+#scene{
+  position:fixed;inset:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:40px;
+  opacity:0;
+  transition:opacity 1s;
+}
+#scene.show{opacity:1;}
+
+/* TEXTO IZQUIERDA */
+#textPanel{
+  width:45%;
+  color:#5a3e00;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+.text-line{
+  font-size:0.99rem;
+  line-height:1.8;
+  margin-bottom:8px;
+}
+
+.text-line.big{
+  font-size:1.2rem;
+  font-weight:bold;
+  color:#c47a00;
+}
+
+.text-line.bold{
+  font-weight:bold;
+}
+
+.text-line.italic{
+  font-style:italic;
+}
+
+.text-line.signature{
+  font-size:0.75rem;
+  color:#8a6500;
+  margin-top:10px;
+}
+
+.text-line.date{
+  font-size:0.72rem;
+  color:#a07800;
+  font-style:italic;
+}
+
+.text-line.spacer{
+  margin-bottom:14px;
+}
+
+/* IMAGEN DERECHA */
+#imageContainer{
+  width:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#imageContainer img{
+  width:90%;
+  max-width:500px;
+  animation:fadeIn 2s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.9);}
+  to{opacity:1; transform:scale(1);}
+}
+
+.petal-fall{
+  position:fixed;
+  top:-20px;
+  border-radius:50% 50% 50% 50%;
+  opacity:0.5;
+  pointer-events:none;
+  z-index:5;
+
+  animation:fall linear forwards;
+  animation-duration: var(--dur);
+  animation-delay: var(--delay);
+}
+
+/* caída suave + ligera oscilación */
+@keyframes fall{
+  0%{
+    transform:translateY(-20px) translateX(0px) rotate(0deg);
+    opacity:0;
+  }
+  10%{opacity:0.6;}
+  50%{
+    transform:translateY(50vh) translateX(15px) rotate(120deg);
+  }
+  100%{
+    transform:translateY(100vh) translateX(-15px) rotate(260deg);
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="sunflower-intro" id="sunIntro">
+    <div class="center-i"></div>
+  </div>
+
+  <div class="intro-text">
+    <div class="intro-title">Flores Amarillas 💛</div>
+    para el amor de mi vida 
+    💘
+  </div>
+
+  <button class="btn-start" id="btnStart">🌻 Abrir 🌻</button>
+</div>
+
+<!-- ESCENA -->
+<div id="scene">
+
+  <!-- TEXTO -->
+  <div id="textPanel">
+    <div class="text-line big">Flores amarillas</div>
+    <div class="text-line italic">para el amor de mi vida.</div>
+    <div class="text-line italic spacer">Flores amarillas para quien</div>
+    <div class="text-line italic">hace mi vida amarilla.</div>
+    <div class="text-line bold spacer">AMAR Y YA.</div>
+    <div class="text-line spacer">El mundo tiene 4 estaciones,<br>4 elementos y 4 puntos cardinales...</div>
+    <div class="text-line">Estos 4 meses contigo</div>
+    <div class="text-line italic">me he dado cuenta que eres mi mundo entero.</div>
+    <div class="text-line bold">Te Amo, Daniel Mahecha 💋</div>
+    <div class="text-line signature">Att: Lucía Torres</div>
+    <div class="text-line date">22 de Junio del 2026</div>
+  </div>
+
+  <!-- IMAGEN -->
+  <div id="imageContainer">
+    <img src="flores.jpeg" alt="Corazón de flores">
+  </div>
+
+</div>
+
+<script>
+/* GIRASOL INTRO */
+const si=document.getElementById('sunIntro');
+for(let i=0;i<12;i++){
+  const p=document.createElement('div');
+  p.className='petal-i';
+  p.style.transform=`translate(-50%,-100%) rotate(${i*30}deg)`;
+  si.appendChild(p);
+}
+
+/* BOTÓN */
+document.getElementById('btnStart').addEventListener('click',()=>{
+  document.getElementById('intro').classList.add('hide');
+  document.getElementById('musica').play();
+
+  setTimeout(()=>{
+    document.getElementById('scene').classList.add('show');
+  },500);
+});
+</script>
+
+<script>
+function crearPetalo(){
+  const petalo = document.createElement("div");
+  petalo.className = "petal-fall";
+
+  // forma tipo pétalo (sin emoji)
+  petalo.style.width = (6 + Math.random()*6) + "px";
+  petalo.style.height = (10 + Math.random()*10) + "px";
+
+  petalo.style.left = Math.random() * 100 + "vw";
+
+  // tonos amarillos suaves
+  const colores = ["#f5c518","#f7d447","#f9e27d","#f3c94a"];
+  petalo.style.background = colores[Math.floor(Math.random()*colores.length)];
+
+  petalo.style.setProperty("--dur", (6 + Math.random()*6) + "s");
+  petalo.style.setProperty("--delay", Math.random() * 5 + "s");
+
+  document.body.appendChild(petalo);
+
+  setTimeout(()=> petalo.remove(), 12000);
+}
+
+setInterval(crearPetalo, 500); // más lento = más elegante
+</script>
+
+<script>
+function escribirTexto() {
+  const textLines = document.querySelectorAll(".text-line");
+  let delay = 0;
+
+  textLines.forEach(line => {
+    const originalHTML = line.innerHTML; // Guardamos el HTML original con <br>
+    line.innerHTML = ""; // Limpiamos
+
+    // Separamos el texto por <br> para respetar los saltos
+    const partes = originalHTML.split(/<br\s*\/?>/i);
+    const contenedor = document.createElement("span");
+    line.appendChild(contenedor);
+
+    let indiceGlobal = 0;
+    let parteActual = 0;
+    let caracterActual = 0;
+
+    setTimeout(() => {
+      function escribirSiguiente() {
+        // Si ya terminamos todas las partes, salimos
+        if (parteActual >= partes.length) return;
+
+        const parteTexto = partes[parteActual];
+
+        // Si la parte está vacía, pasamos al siguiente <br>
+        if (parteTexto === "" || parteTexto === " ") {
+          // Añadimos un <br> real
+          const br = document.createElement("br");
+          contenedor.appendChild(br);
+          parteActual++;
+          caracterActual = 0;
+          // Seguimos con la siguiente parte
+          setTimeout(escribirSiguiente, 100);
+          return;
+        }
+
+        // Si ya terminamos esta parte, añadimos <br> y pasamos a la siguiente
+        if (caracterActual >= parteTexto.length) {
+          const br = document.createElement("br");
+          contenedor.appendChild(br);
+          parteActual++;
+          caracterActual = 0;
+          // Pasamos a la siguiente parte después de un pequeño delay
+          setTimeout(escribirSiguiente, 100);
+          return;
+        }
+
+        // Añadimos el siguiente caracter
+        const char = parteTexto[caracterActual];
+        const span = document.createElement("span");
+        span.textContent = char;
+        contenedor.appendChild(span);
+        caracterActual++;
+
+        // Programamos el siguiente caracter
+        setTimeout(escribirSiguiente, 25);
+      }
+
+      // Iniciamos la escritura
+      escribirSiguiente();
+    }, delay);
+
+    // Calculamos el delay aproximado basado en la longitud del texto original
+    const lengthAprox = originalHTML.replace(/<br\s*\/?>/gi, " ").length;
+    delay += lengthAprox * 25 + 400;
+  });
+}
+
+/* BOTÓN - Versión mejorada */
+document.getElementById('btnStart').addEventListener('click', function() {
+  document.getElementById('intro').classList.add('hide');
+
+  setTimeout(() => {
+    document.getElementById('scene').classList.add('show');
+    // Limpiamos el texto para evitar duplicados si se vuelve a abrir
+    document.querySelectorAll(".text-line").forEach(line => {
+      // Restauramos el HTML original desde un atributo o desde el código
+      // Como es la primera vez, usamos una copia del HTML original guardado
+      if (!line.dataset.original) {
+        line.dataset.original = line.innerHTML;
+      }
+    });
+    escribirTexto();
+  }, 500);
+});
+
+// Guardamos el HTML original de cada línea al cargar
+document.querySelectorAll(".text-line").forEach(line => {
+  line.dataset.original = line.innerHTML;
+});
+</script>
+
+<audio id="musica" src="yellow.mp3" loop></audio>
+
+</body>
+</html>
