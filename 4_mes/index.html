@@ -12,6 +12,7 @@ html,body{
   background:#f3eadf;
   font-family:Georgia,serif;
   overflow:hidden;
+  overflow-y:auto;
 }
 
 /* INTRO */
@@ -50,6 +51,7 @@ html,body{
   padding:40px;
   opacity:0;
   transition:opacity 1s;
+  min-height:100vh;
 }
 #scene.show{opacity:1;}
 
@@ -144,6 +146,24 @@ html,body{
   100%{
     transform:translateY(100vh) translateX(-15px) rotate(260deg);
     opacity:0;
+  }
+}
+
+@media (max-width: 600px) {
+  #scene{
+    flex-direction:column;
+    padding:24px 16px;
+  }
+  #textPanel{
+    width:100%;
+    text-align:center;
+  }
+  #imageContainer{
+    width:100%;
+    margin-top:20px;
+  }
+  .text-line{
+    font-size:0.88rem;
   }
 }
 
