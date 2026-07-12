@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felices 5 Meses 💛</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Playfair+Display:ital,wght@0,600;1,500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;overflow-x:hidden;}
+body{font-family:'Press Start 2P',monospace;}
+
+.screen{display:none;min-height:100vh;width:100%;flex-direction:column;align-items:center;opacity:0;}
+.screen.active{display:flex;animation:fadeInScreen 0.7s ease forwards;}
+@keyframes fadeInScreen{from{opacity:0;}to{opacity:1;}}
+
+/* ===================== PANTALLA 1: BIENVENIDA ===================== */
+#screen1{
+  background:linear-gradient(180deg,#7ec8f0 0%,#a8dcf5 55%,#a8dcf5 55%);
+  position:relative;overflow:hidden;
+}
+.s1-cloud{position:absolute;background:#fff;opacity:0.9;}
+.s1-sun{position:absolute;top:18px;right:24px;width:44px;height:44px;background:#ffe066;border:4px solid #c9a020;}
+.s1-ground{position:absolute;bottom:0;left:0;right:0;height:110px;}
+.s1-dirt{height:80px;background:repeating-linear-gradient(90deg,#8b5a2b 0 24px,#7a4d24 24px 48px);border-top:6px solid #4a7c1f;}
+.s1-grass{height:30px;background:repeating-linear-gradient(90deg,#5da024 0 24px,#4a8a1a 24px 48px);}
+.s1-card{
+  margin-top:60px;background:#c6c6c6;border:6px solid #3a3a3a;
+  box-shadow:inset 0 0 0 4px #8f8f8f;padding:24px 18px;width:88%;max-width:320px;
+  text-align:center;position:relative;z-index:5;
+}
+.s1-title{font-size:13px;color:#2b2b2b;line-height:2.1;margin-bottom:14px;text-shadow:1px 1px 0 #fff;}
+.s1-sub{font-size:8px;color:#4a4a4a;line-height:1.9;margin:18px 0 22px;}
+.s1-btn-yes{
+  background:#5da024;border:4px solid #2f5a10;color:#eaffd8;
+  font-family:'Press Start 2P',monospace;font-size:9px;padding:14px 16px;
+  cursor:pointer;box-shadow:inset -3px -3px 0 #2f5a10, inset 3px 3px 0 #8fd94a;
+  width:100%;margin-bottom:14px;text-shadow:1px 1px 0 #2f5a10;
+}
+.s1-btn-no{
+  position:absolute;background:#c0392b;border:4px solid #6b1f16;color:#ffe0da;
+  font-family:'Press Start 2P',monospace;font-size:8px;padding:12px 14px;
+  cursor:pointer;box-shadow:inset -3px -3px 0 #6b1f16, inset 3px 3px 0 #e0685a;
+  transition:top 0.25s ease,left 0.25s ease;z-index:50;text-shadow:1px 1px 0 #6b1f16;
+}
+.s1-msg{margin-top:16px;font-size:8px;color:#2b2b2b;min-height:14px;text-shadow:1px 1px 0 #fff;}
+
+/* ===================== PANTALLA 2: PREGUNTA DE FECHA ===================== */
+#screen2{
+  background:linear-gradient(180deg,#0d1420 0%,#1a2438 60%,#1a2438 100%);
+  position:relative;overflow:hidden;justify-content:center;
+}
+.s2-star{position:absolute;width:3px;height:3px;background:#fff;opacity:0.8;}
+.s2-stone-row{position:absolute;bottom:0;left:0;right:0;height:90px;background:repeating-linear-gradient(90deg,#4a4a4a 0 24px,#3d3d3d 24px 48px);border-top:6px solid #5a5a5a;}
+.s2-torch{position:absolute;width:8px;height:22px;background:#6b4423;}
+.s2-flame{position:absolute;width:14px;height:16px;background:#ff9d2e;top:-14px;left:-3px;box-shadow:0 0 12px 4px rgba(255,157,46,0.6);animation:s2flick 0.6s infinite alternate;}
+@keyframes s2flick{0%{transform:scale(1);opacity:1;}100%{transform:scale(0.85);opacity:0.85;}}
+.s2-card{
+  background:#c6c6c6;border:6px solid #3a3a3a;box-shadow:inset 0 0 0 4px #8f8f8f, 0 0 24px rgba(255,157,46,0.25);
+  padding:24px 18px;width:88%;max-width:320px;text-align:center;position:relative;z-index:5;
+}
+.s2-title{font-size:11px;color:#2b2b2b;line-height:2;margin-bottom:6px;text-shadow:1px 1px 0 #fff;}
+.s2-sub{font-size:8px;color:#4a4a4a;line-height:1.9;margin:16px 0 18px;}
+.s2-inp{
+  width:100%;font-family:'Press Start 2P',monospace;font-size:11px;padding:12px 8px;
+  border:4px solid #6b6b6b;background:#e8e8e8;color:#2b2b2b;text-align:center;
+  margin-bottom:16px;box-shadow:inset 2px 2px 0 #9a9a9a;
+}
+.s2-inp:focus{outline:none;border-color:#5da024;}
+.s2-btn-send{
+  background:#c0392b;border:4px solid #6b1f16;color:#ffe0da;font-family:'Press Start 2P',monospace;
+  font-size:9px;padding:12px 16px;cursor:pointer;box-shadow:inset -3px -3px 0 #6b1f16, inset 3px 3px 0 #e0685a;
+  width:100%;text-shadow:1px 1px 0 #6b1f16;
+}
+.s2-alert{margin-top:16px;border:3px solid #6b1f16;color:#fff;font-size:8px;padding:10px;line-height:1.6;display:none;}
+.s2-alert.show{display:block;}
+
+/* ===================== PANTALLA 3: LABERINTO ===================== */
+#screen3{
+  background:linear-gradient(180deg,#7ec8f0 0%,#a8dcf5 12%, #3a6b1f 12%, #2d5416 100%);
+  position:relative;overflow:hidden;padding:16px 10px 24px;
+}
+.s3-tree-trunk{position:absolute;top:0;width:26px;height:70px;background:repeating-linear-gradient(90deg,#5a3a1e 0 6px,#4a2e16 6px 12px);z-index:1;}
+.s3-canopy{position:absolute;top:0;height:46px;background:linear-gradient(160deg,#2d5416,#3a6b1f 40%,#4a8028 70%,#2d5416);z-index:1;}
+.s3-header{background:#c6c6c6;border:5px solid #3a3a3a;box-shadow:inset 0 0 0 3px #8f8f8f;padding:10px 16px;margin:16px 0 10px;text-align:center;font-size:9px;color:#1e3d0f;text-shadow:1px 1px 0 #fff;position:relative;z-index:5;}
+.s3-goal-label{font-size:7px;color:#eaffd8;margin-bottom:10px;text-shadow:1px 1px 0 #1e3d0f;position:relative;z-index:5;}
+.s3-maze-scroll{max-width:100%;overflow:auto;position:relative;z-index:5;border:6px solid #2b1a0a;box-shadow:inset 0 0 0 3px #1e5510;}
+.s3-maze-container{position:relative;background:#3d7a1a;display:grid;}
+.s3-cell{position:relative;}
+.s3-wall{background:linear-gradient(135deg,#2d5416 0%,#3a6b1f 40%,#4a8028 70%,#2d5416 100%);box-shadow:inset -2px -2px 0 rgba(0,0,0,0.25), inset 2px 2px 0 rgba(255,255,255,0.1);}
+.s3-wall::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 25% 30%, rgba(0,0,0,0.18) 1.5px, transparent 1.5px),radial-gradient(circle at 65% 65%, rgba(255,255,255,0.1) 1.5px, transparent 1.5px);}
+.s3-path{background:linear-gradient(135deg,#8a5a2e 0%,#7a4d24 25%,#96683a 50%,#6b4420 75%,#8a5a2e 100%);}
+.s3-path::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 25%, rgba(0,0,0,0.25) 1.2px, transparent 1.2px),radial-gradient(circle at 60% 70%, rgba(120,120,120,0.35) 1.2px, transparent 1.2px),radial-gradient(circle at 80% 30%, rgba(0,0,0,0.2) 1.2px, transparent 1.2px),radial-gradient(circle at 35% 80%, rgba(150,150,150,0.3) 1.2px, transparent 1.2px);}
+.s3-path.s3-top-row::before{content:'';position:absolute;top:0;left:0;right:0;height:22%;background:linear-gradient(180deg,#5da024,#3a6b1f);}
+.s3-start-cell{box-shadow:0 0 0 2px #d4e8a8 inset;}
+.s3-goal-cell{box-shadow:0 0 0 2px #ffd9ec inset;}
+.s3-player{position:absolute;inset:1px;background:#3a5ba0;border:1px solid #1a2d5a;display:flex;align-items:center;justify-content:center;font-size:9px;z-index:10;border-radius:2px;overflow:hidden;}
+.s3-player img{width:100%;height:100%;object-fit:cover;}
+.s3-goal-char{position:absolute;inset:1px;background:#c9457a;border:1px solid #6b1f4a;display:flex;align-items:center;justify-content:center;font-size:9px;border-radius:2px;overflow:hidden;}
+.s3-goal-char img{width:100%;height:100%;object-fit:cover;}
+.s3-controls{margin-top:16px;position:relative;z-index:5;display:grid;grid-template-columns:repeat(3,50px);grid-template-rows:repeat(2,50px);gap:6px;}
+.s3-ctrl-btn{background:#c6c6c6;border:4px solid #3a3a3a;box-shadow:inset -2px -2px 0 #8f8f8f, inset 2px 2px 0 #fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#2b2b2b;}
+.s3-ctrl-btn:active{box-shadow:inset 2px 2px 0 #8f8f8f;}
+.s3-up{grid-column:2;grid-row:1;} .s3-left{grid-column:1;grid-row:2;} .s3-down{grid-column:2;grid-row:2;} .s3-right{grid-column:3;grid-row:2;}
+.s3-winMsg{position:fixed;inset:0;background:rgba(20,40,10,0.85);display:none;align-items:center;justify-content:center;z-index:100;}
+.s3-winMsg.show{display:flex;}
+.s3-winCard{background:#c6c6c6;border:6px solid #3a3a3a;box-shadow:inset 0 0 0 4px #8f8f8f;padding:26px 20px;text-align:center;max-width:280px;}
+.s3-winCard .s3-t{font-size:13px;color:#1e3d0f;margin-bottom:16px;text-shadow:1px 1px 0 #fff;}
+.s3-hearts-line{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:10px;}
+.s3-face{width:44px;height:44px;border-radius:4px;background:#3a5ba0;border:2px solid #1a2d5a;overflow:hidden;}
+.s3-face.s3-two{background:#c9457a;border-color:#6b1f4a;}
+.s3-face img{width:100%;height:100%;object-fit:cover;}
+.s3-continue-btn{
+  margin-top:18px;font-family:Georgia,serif;font-style:italic;font-size:11px;padding:9px 20px;
+  border-radius:20px;cursor:pointer;border:1px solid rgba(0,0,0,0.15);
+  background:rgba(93,160,36,0.25);color:#2f5a10;box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* ===================== PANTALLA 4: CAMINO A CASA ===================== */
+#screen4{
+  background:linear-gradient(180deg,#7ec8f0 0%,#bfe3f7 22%,#5da024 22%,#4a8a1a 100%);
+  position:relative;overflow:hidden;padding:16px 10px 24px;
+}
+.s4-cloud{position:absolute;background:#fff;opacity:0.95;}
+.s4-tree-trunk{position:absolute;bottom:0;width:20px;height:60px;background:repeating-linear-gradient(90deg,#5a3a1e 0 5px,#4a2e16 5px 10px);}
+.s4-canopy{position:absolute;bottom:44px;width:56px;height:40px;background:linear-gradient(160deg,#2d5416,#3a6b1f 40%,#4a8028 70%,#2d5416);border-radius:4px;}
+.s4-header{background:#c6c6c6;border:5px solid #3a3a3a;box-shadow:inset 0 0 0 3px #8f8f8f;padding:10px 16px;margin:16px 0 8px;text-align:center;font-size:9px;color:#1e3d0f;text-shadow:1px 1px 0 #fff;position:relative;z-index:5;}
+.s4-sub-label{font-size:7px;color:#fff;margin-bottom:10px;text-shadow:1px 1px 0 #1e3d0f;position:relative;z-index:5;}
+.s4-board{position:relative;border:6px solid #2b1a0a;box-shadow:inset 0 0 0 3px #1e5510;overflow:hidden;z-index:5;}
+.s4-lane{position:absolute;left:0;right:0;}
+.s4-lane.s4-goal{background:linear-gradient(180deg,#8ec8e8,#6bb0d8);}
+.s4-lane.s4-grass{background:repeating-linear-gradient(90deg,#5da024 0 24px,#4a8a1a 24px 48px);}
+.s4-lane.s4-water{background:repeating-linear-gradient(90deg,#3a7ac0 0 24px,#2f66a3 24px 48px);}
+.s4-lane.s4-dirt{background:repeating-linear-gradient(90deg,#8a5a2e 0 24px,#7a4d24 24px 48px);}
+.s4-lane.s4-stone{background:repeating-linear-gradient(90deg,#8a8a8a 0 24px,#7a7a7a 24px 48px);}
+.s4-house{position:absolute;top:2px;left:62%;transform:translateX(-50%);width:72px;height:62px;}
+.s4-house-base{position:absolute;bottom:0;left:6px;right:6px;height:38px;background:#8a5a2e;border:2px solid #4a2e16;}
+.s4-house-roof{position:absolute;top:0;left:0;right:0;height:0;border-left:36px solid transparent;border-right:36px solid transparent;border-bottom:26px solid #6b3a1e;}
+.s4-house-window{position:absolute;bottom:12px;left:27px;width:12px;height:12px;background:#ffe066;border:2px solid #4a2e16;}
+.s4-house-door{position:absolute;bottom:0;right:14px;width:13px;height:20px;background:#4a2e16;}
+.s4-waiting-char{position:absolute;top:14px;left:16%;width:34px;height:34px;background:#c9457a;border:2px solid #6b1f4a;border-radius:3px;overflow:hidden;z-index:8;}
+.s4-waiting-char img,.s4-player img,.s4-face img{width:100%;height:100%;object-fit:cover;display:block;}
+.s4-waiting-char .s4-eye{position:absolute;width:5px;height:5px;top:12px;background:#fff;}
+.s4-waiting-char .s4-eye.s4-l{left:8px;} .s4-waiting-char .s4-eye.s4-r{right:8px;}
+.s4-player{position:absolute;width:32px;height:32px;top:6px;background:#3a5ba0;border:2px solid #1a2d5a;border-radius:3px;z-index:20;transition:left 0.12s linear, top 0.12s linear;overflow:hidden;}
+.s4-player .s4-eye{position:absolute;width:5px;height:5px;top:11px;background:#eaf0ff;}
+.s4-player .s4-eye.s4-l{left:8px;} .s4-player .s4-eye.s4-r{right:8px;}
+.s4-mobbox{position:absolute;}
+.s4-creeper-b{width:28px;height:44px;background:linear-gradient(180deg,#6ecb4a 0%,#4e9a3a 55%,#3a7a2c 100%);position:relative;box-shadow:inset -2px 0 0 rgba(0,0,0,0.15);}
+.s4-px{position:absolute;background:#142408;}
+.s4-creeper-b .s4-px.e1{width:4px;height:5px;top:6px;left:5px;}
+.s4-creeper-b .s4-px.e2{width:4px;height:5px;top:6px;left:19px;}
+.s4-creeper-b .s4-px.m1{width:4px;height:4px;top:14px;left:9px;}
+.s4-creeper-b .s4-px.m2{width:4px;height:4px;top:14px;left:13px;}
+.s4-creeper-b .s4-px.m3{width:4px;height:4px;top:14px;left:17px;}
+.s4-creeper-b .s4-px.m4{width:4px;height:8px;top:18px;left:13px;}
+.s4-spider-b{width:44px;height:18px;background:radial-gradient(ellipse at center,#2b2b2b,#141414);border-radius:8px;position:relative;}
+.s4-spider-b .s4-eye{position:absolute;width:4px;height:4px;top:6px;background:#ff3b30;box-shadow:0 0 4px #ff3b30;}
+.s4-spider-b .s4-eye.a{left:6px;} .s4-spider-b .s4-eye.b{left:13px;}
+.s4-leg2{position:absolute;height:2.5px;background:#1a1a1a;}
+.s4-spider-b .s4-leg2.l1{width:16px;top:2px;left:-13px;transform:rotate(18deg);}
+.s4-spider-b .s4-leg2.l2{width:16px;top:8px;left:-14px;transform:rotate(-5deg);}
+.s4-spider-b .s4-leg2.l3{width:16px;top:13px;left:-13px;transform:rotate(-20deg);}
+.s4-spider-b .s4-leg2.r1{width:16px;top:2px;right:-13px;transform:rotate(-18deg);}
+.s4-spider-b .s4-leg2.r2{width:16px;top:8px;right:-14px;transform:rotate(5deg);}
+.s4-spider-b .s4-leg2.r3{width:16px;top:13px;right:-13px;transform:rotate(20deg);}
+.s4-skel-wrap{width:34px;height:46px;position:relative;}
+.s4-skel-head{position:absolute;top:0;left:9px;width:16px;height:14px;background:#e6e6df;box-shadow:inset -2px -2px 0 rgba(0,0,0,0.1);}
+.s4-skel-head .s4-eye{position:absolute;width:3px;height:4px;top:5px;background:#1a1a1a;}
+.s4-skel-head .s4-eye.s4-l{left:3px;} .s4-skel-head .s4-eye.s4-r{right:3px;}
+.s4-skel-body{position:absolute;top:13px;left:10px;width:14px;height:16px;background:#d3d3c8;}
+.s4-skel-legs{position:absolute;top:28px;left:10px;width:14px;height:16px;background:#bcbcae;}
+.s4-skel-legs::before,.s4-skel-legs::after{content:'';position:absolute;width:5px;height:16px;background:#a8a89a;top:0;}
+.s4-skel-legs::before{left:1px;} .s4-skel-legs::after{right:1px;}
+.s4-skel-bow{position:absolute;top:12px;left:26px;width:4px;height:20px;border-radius:4px;background:#7a5230;}
+.s4-zom-wrap{width:34px;height:46px;position:relative;}
+.s4-zom-head{position:absolute;top:0;left:9px;width:16px;height:14px;background:#5a8a44;}
+.s4-zom-head .s4-eye{position:absolute;width:3px;height:4px;top:5px;background:#0d1a08;}
+.s4-zom-head .s4-eye.s4-l{left:3px;} .s4-zom-head .s4-eye.s4-r{right:3px;}
+.s4-zom-body{position:absolute;top:13px;left:8px;width:18px;height:16px;background:#2fa39c;}
+.s4-zom-arm{position:absolute;top:14px;width:6px;height:15px;background:#5a8a44;}
+.s4-zom-arm.s4-l{left:2px;} .s4-zom-arm.s4-r{right:2px;}
+.s4-zom-legs{position:absolute;top:28px;left:9px;width:16px;height:16px;background:#33448a;}
+.s4-ghast-wrap{width:38px;height:44px;position:relative;}
+.s4-ghast-head{width:38px;height:30px;background:#eceae0;box-shadow:inset -3px -3px 0 rgba(0,0,0,0.08);position:relative;}
+.s4-ghast-head .s4-eye{position:absolute;width:4px;height:3px;top:11px;background:#9a9a90;}
+.s4-ghast-head .s4-eye.s4-l{left:9px;} .s4-ghast-head .s4-eye.s4-r{right:9px;}
+.s4-ghast-head .s4-mouth{position:absolute;width:8px;height:3px;top:18px;left:15px;background:#9a9a90;}
+.s4-tent{position:absolute;top:30px;width:4px;height:14px;background:#eceae0;animation:s4sway 1.4s ease-in-out infinite alternate;}
+.s4-tent.t1{left:3px;animation-delay:0s;} .s4-tent.t2{left:11px;animation-delay:0.2s;height:10px;}
+.s4-tent.t3{left:19px;animation-delay:0.4s;height:16px;} .s4-tent.t4{left:27px;animation-delay:0.1s;height:11px;}
+.s4-tent.t5{left:33px;animation-delay:0.3s;}
+@keyframes s4sway{0%{transform:rotate(-4deg);}100%{transform:rotate(4deg);}}
+.s4-ender-wrap{width:24px;height:48px;position:relative;}
+.s4-ender-head{position:absolute;top:0;left:5px;width:14px;height:13px;background:#0d0d0d;}
+.s4-ender-head .s4-eye{position:absolute;width:3px;height:5px;top:5px;background:#c060ff;box-shadow:0 0 5px #c060ff;}
+.s4-ender-head .s4-eye.s4-l{left:2px;} .s4-ender-head .s4-eye.s4-r{right:2px;}
+.s4-ender-body{position:absolute;top:12px;left:7px;width:10px;height:18px;background:#0d0d0d;}
+.s4-ender-arm{position:absolute;top:12px;width:4px;height:22px;background:#161616;}
+.s4-ender-arm.s4-l{left:1px;} .s4-ender-arm.s4-r{right:1px;}
+.s4-ender-legs{position:absolute;top:29px;left:7px;width:10px;height:19px;background:#161616;}
+.s4-controls{margin-top:16px;position:relative;z-index:5;display:grid;grid-template-columns:repeat(3,50px);grid-template-rows:repeat(2,50px);gap:6px;}
+.s4-ctrl-btn{background:#c6c6c6;border:4px solid #3a3a3a;box-shadow:inset -2px -2px 0 #8f8f8f, inset 2px 2px 0 #fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#2b2b2b;}
+.s4-ctrl-btn:active{box-shadow:inset 2px 2px 0 #8f8f8f;}
+.s4-up{grid-column:2;grid-row:1;} .s4-left{grid-column:1;grid-row:2;} .s4-down{grid-column:2;grid-row:2;} .s4-right{grid-column:3;grid-row:2;}
+.s4-msg{margin-top:12px;font-size:8px;color:#fff;text-shadow:1px 1px 0 #1e3d0f;min-height:12px;position:relative;z-index:5;}
+.s4-winMsg{position:fixed;inset:0;background:rgba(20,40,10,0.85);display:none;align-items:center;justify-content:center;z-index:100;}
+.s4-winMsg.show{display:flex;}
+.s4-winCard{background:#c6c6c6;border:6px solid #3a3a3a;box-shadow:inset 0 0 0 4px #8f8f8f;padding:26px 20px;text-align:center;max-width:280px;}
+.s4-winCard .s4-t{font-size:12px;color:#1e3d0f;margin-bottom:16px;text-shadow:1px 1px 0 #fff;}
+.s4-hearts-line{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:10px;}
+.s4-face{width:40px;height:40px;border-radius:3px;background:#3a5ba0;border:2px solid #1a2d5a;overflow:hidden;}
+.s4-face.s4-two{background:#c9457a;border-color:#6b1f4a;}
+.s4-continue-btn{
+  margin-top:18px;font-family:Georgia,serif;font-style:italic;font-size:11px;padding:9px 20px;
+  border-radius:20px;cursor:pointer;border:1px solid rgba(0,0,0,0.15);
+  background:rgba(93,160,36,0.25);color:#2f5a10;box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* ===================== PANTALLA 5: MOTO ===================== */
+#screen5{
+  background:linear-gradient(180deg,#070a14 0%,#101a2e 55%,#101a2e 100%);
+  position:relative;overflow:hidden;padding:16px 10px 24px;
+}
+.s5-star{position:absolute;background:#fff;border-radius:1px;animation:s5tw 2.4s ease-in-out infinite alternate;}
+@keyframes s5tw{0%{opacity:0.3;}100%{opacity:1;}}
+.s5-moon{position:absolute;top:18px;right:28px;width:46px;height:46px;border-radius:50%;background:#f4f0d8;border:3px solid #cfc89a;box-shadow:0 0 30px rgba(244,240,216,0.5);}
+.s5-moon::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#ddd7ae;top:10px;left:12px;box-shadow:6px 14px 0 -2px #ddd7ae;}
+.s5-header{background:#c6c6c6;border:5px solid #3a3a3a;box-shadow:inset 0 0 0 3px #8f8f8f;padding:10px 16px;margin:16px 0 8px;text-align:center;font-size:9px;color:#2b2b2b;text-shadow:1px 1px 0 #fff;position:relative;z-index:5;}
+.s5-sub-label{font-size:7px;color:#dce6ff;margin-bottom:10px;text-shadow:1px 1px 0 #0a0e1a;position:relative;z-index:5;}
+.s5-hud{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:460px;margin-bottom:6px;position:relative;z-index:5;}
+.s5-hearts{display:flex;gap:3px;}
+.s5-heart{font-size:16px;}
+.s5-flower-count{font-size:10px;color:#fff;text-shadow:1px 1px 0 #0a0e1a;}
+.s5-progress-bar{width:100%;max-width:460px;height:12px;background:#2b2b2b;border:2px solid #555;margin-bottom:10px;position:relative;z-index:5;}
+.s5-progress-fill{height:100%;background:linear-gradient(90deg,#f5c518,#ffdd66);width:0%;transition:width 0.1s linear;}
+.s5-gameArea{position:relative;width:100%;max-width:460px;height:300px;border:5px solid #2b1a0a;box-shadow:inset 0 0 0 3px #1a2440;overflow:hidden;background:linear-gradient(180deg,#101a2e,#070a14 70%);z-index:5;}
+.s5-tree-silh2{position:absolute;bottom:64px;width:34px;}
+.s5-tree-silh2 .s5-trunk{position:absolute;bottom:0;left:13px;width:8px;height:20px;background:#1a1006;}
+.s5-tree-silh2 .s5-leaf{position:absolute;bottom:16px;left:0;width:34px;height:26px;background:#0d1a08;border-radius:3px;}
+.s5-ground-strip{position:absolute;bottom:0;left:0;right:0;height:64px;background:repeating-linear-gradient(90deg,#3a2a18 0 28px,#2f2110 28px 56px);border-top:4px solid #1a3d0d;}
+.s5-ground-strip::before{content:'';position:absolute;top:-5px;left:0;right:0;height:9px;background:repeating-linear-gradient(90deg,#3a6b1f 0 28px,#2d5416 28px 56px);}
+.s5-player{position:absolute;left:46px;bottom:64px;width:92px;height:74px;z-index:10;}
+.s5-wheel{position:absolute;bottom:0;width:32px;height:32px;border-radius:50%;background:#111;border:4px solid #2a2a2a;}
+.s5-wheel::after{content:'';position:absolute;inset:6px;border-radius:50%;background:#555;border:2px solid #333;}
+.s5-wheel.s5-b{left:0;} .s5-wheel.s5-f{right:0;}
+.s5-bike-frame{position:absolute;bottom:20px;left:14px;width:66px;height:20px;background:#1a1a1a;clip-path:polygon(0% 60%,15% 20%,55% 0%,100% 30%,100% 100%,10% 100%);}
+.s5-bike-tank{position:absolute;bottom:30px;left:26px;width:34px;height:18px;background:linear-gradient(160deg,#e0392b,#a8241a);border-radius:6px 10px 4px 4px;box-shadow:inset -3px -3px 0 rgba(0,0,0,0.25);}
+.s5-bike-fender-f{position:absolute;bottom:26px;right:2px;width:26px;height:8px;background:#c0392b;border-radius:6px 6px 0 0;transform:rotate(-8deg);}
+.s5-bike-fork{position:absolute;bottom:8px;right:8px;width:5px;height:26px;background:#3a3a3a;transform:rotate(18deg);}
+.s5-handlebar{position:absolute;bottom:46px;right:6px;width:16px;height:4px;background:#2a2a2a;border-radius:2px;}
+.s5-exhaust{position:absolute;bottom:14px;left:2px;width:16px;height:6px;background:#888;border-radius:3px;}
+.s5-bike-seat{position:absolute;bottom:36px;left:38px;width:22px;height:8px;background:#111;border-radius:4px 4px 0 0;}
+.s5-rider-body{position:absolute;bottom:40px;left:40px;width:20px;height:20px;background:#fff;border-radius:3px;box-shadow:inset -2px -2px 0 rgba(0,0,0,0.1);}
+.s5-rider-arm{position:absolute;bottom:40px;left:34px;width:20px;height:8px;background:#d9a066;border-radius:3px;transform:rotate(8deg);}
+.s5-rider-head{position:absolute;bottom:56px;left:38px;width:26px;height:24px;background:#e8b98a;border-radius:3px;overflow:hidden;border:2px solid #3a2a18;}
+.s5-rider-head img{width:100%;height:100%;object-fit:cover;display:block;}
+.s5-rider-shades{position:absolute;bottom:64px;left:39px;width:24px;height:6px;background:#111;border-radius:2px;}
+.s5-rider-hair{position:absolute;bottom:74px;left:39px;width:24px;height:6px;background:#3a2a18;border-radius:3px 3px 0 0;}
+.s5-player.s5-jumping{animation:s5jump 0.7s ease-in-out;}
+@keyframes s5jump{0%{transform:translateY(0);}40%{transform:translateY(-90px);}100%{transform:translateY(0);}}
+.s5-obstacle{position:absolute;bottom:64px;}
+.s5-obs-cactus{background:#2f8a3a;box-shadow:inset -3px 0 0 rgba(0,0,0,0.2);}
+.s5-obs-tree-trunk{background:#5a3a1e;}
+.s5-obs-tree-leaf{position:absolute;top:-18px;left:-9px;width:36px;height:22px;background:#1e4a12;}
+.s5-obs-stone{background:#7a7a7a;box-shadow:inset -3px -3px 0 rgba(0,0,0,0.25);}
+.s5-flower-el{position:absolute;font-size:22px;bottom:132px;}
+.s5-finishScene{position:fixed;inset:0;background:rgba(5,8,15,0.92);display:none;align-items:center;justify-content:center;z-index:100;}
+.s5-finishScene.show{display:flex;}
+.s5-finishCard{background:#c6c6c6;border:6px solid #3a3a3a;box-shadow:inset 0 0 0 4px #8f8f8f;padding:26px 22px;text-align:center;max-width:300px;font-family:'Press Start 2P',monospace;}
+.s5-finishCard .s5-t{font-size:12px;color:#1e3d0f;margin-bottom:14px;text-shadow:1px 1px 0 #fff;}
+.s5-finishCard .s5-flowersmsg{font-size:10px;color:#8a5c00;margin-top:14px;line-height:1.7;}
+.s5-hearts-line{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:10px;}
+.s5-face{width:40px;height:40px;border-radius:3px;background:#3a5ba0;border:2px solid #1a2d5a;overflow:hidden;}
+.s5-face.s5-two{background:#c9457a;border-color:#6b1f4a;}
+.s5-face img{width:100%;height:100%;object-fit:cover;display:block;}
+.s5-finish-flower-badge{margin-top:14px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.5);border:1px solid rgba(180,140,0,0.3);border-radius:14px;padding:6px 14px;font-size:9px;color:#6b5000;}
+.s5-finish-btns{margin-top:20px;display:flex;justify-content:center;gap:10px;}
+.s5-subtle-btn{font-family:Georgia,serif;font-style:italic;font-size:11px;padding:8px 16px;border-radius:20px;cursor:pointer;border:1px solid rgba(0,0,0,0.15);background:rgba(255,255,255,0.55);color:#4a3b2a;transition:transform 0.15s ease, background 0.15s ease;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+.s5-subtle-btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.8);}
+.s5-subtle-btn.s5-primary{background:rgba(93,160,36,0.25);border-color:rgba(47,90,16,0.35);color:#2f5a10;}
+.s5-subtle-btn.s5-primary:hover{background:rgba(93,160,36,0.4);}
+.s5-restartMsg{position:fixed;inset:0;background:rgba(120,20,20,0.8);display:none;align-items:center;justify-content:center;z-index:100;}
+.s5-restartMsg.show{display:flex;}
+.s5-restartCard{background:#c6c6c6;border:6px solid #3a3a3a;padding:22px;text-align:center;font-size:10px;color:#7a1f16;font-family:'Press Start 2P',monospace;}
+
+/* ===================== PANTALLA 6: SORPRESA FINAL ===================== */
+#screen6{
+  background:radial-gradient(ellipse at 50% 30%,#1a0f2e 0%,#0a0515 70%);
+  position:relative;overflow:hidden;padding:30px 16px;justify-content:center;
+  font-family:'Playfair Display',serif;
+}
+.s6-falling{position:absolute;top:-30px;opacity:0;animation:s6fall linear infinite;pointer-events:none;}
+@keyframes s6fall{0%{opacity:0;transform:translateY(0) translateX(0) rotate(0deg);}10%{opacity:0.9;}90%{opacity:0.5;}100%{opacity:0;transform:translateY(110vh) translateX(20px) rotate(360deg);}}
+.s6-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:#e8c9ff;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;padding:0.4rem 1.3rem;border-radius:50px;margin-bottom:1.4rem;position:relative;z-index:5;}
+.s6-title{font-size:2.4rem;color:#fff;font-weight:600;text-align:center;text-shadow:0 0 30px rgba(200,150,255,0.5);margin-bottom:0.3rem;position:relative;z-index:5;}
+.s6-title span{color:#e8a8ff;}
+.s6-subtitle{font-size:1rem;color:rgba(230,210,255,0.7);font-style:italic;margin-bottom:2rem;position:relative;z-index:5;text-align:center;}
+.s6-photo-frame{width:220px;height:220px;border-radius:14px;border:3px solid rgba(255,255,255,0.25);box-shadow:0 10px 40px rgba(150,80,220,0.35);overflow:hidden;margin:0 auto 1.8rem;position:relative;z-index:5;background:linear-gradient(135deg,#3a2255,#22143a);display:flex;align-items:center;justify-content:center;}
+.s6-photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+.s6-photo-placeholder{color:rgba(255,255,255,0.4);font-size:0.75rem;text-align:center;padding:1rem;}
+.s6-player-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1rem 1.4rem;display:flex;align-items:center;gap:12px;margin:0 auto 1.6rem;position:relative;z-index:5;width:100%;max-width:300px;}
+.s6-play-btn{width:38px;height:38px;border-radius:50%;background:#e8a8ff;border:none;color:#2a1240;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;flex-shrink:0;}
+.s6-song-info{flex:1;}
+.s6-song-title{font-size:0.85rem;color:#fff;}
+.s6-song-artist{font-size:0.72rem;color:rgba(255,255,255,0.55);font-style:italic;}
+.s6-wave{display:flex;gap:2px;align-items:flex-end;height:16px;}
+.s6-wave span{width:2px;background:#e8a8ff;border-radius:2px;animation:s6wv 1s ease-in-out infinite;}
+.s6-wave span:nth-child(1){height:6px;animation-delay:0s;}
+.s6-wave span:nth-child(2){height:12px;animation-delay:0.15s;}
+.s6-wave span:nth-child(3){height:8px;animation-delay:0.3s;}
+.s6-wave span:nth-child(4){height:14px;animation-delay:0.45s;}
+@keyframes s6wv{0%,100%{transform:scaleY(0.4);}50%{transform:scaleY(1);}}
+.s6-lyric-box{max-width:320px;text-align:center;min-height:60px;position:relative;z-index:5;margin:0 auto;}
+.s6-lyric-text{font-size:0.95rem;color:rgba(255,230,255,0.85);font-style:italic;line-height:1.8;}
+.s6-cursor{display:inline-block;width:2px;height:1em;background:#e8a8ff;vertical-align:text-bottom;animation:s6blink 0.75s step-end infinite;margin-left:1px;}
+@keyframes s6blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.s6-final-msg{margin-top:1.5rem;font-size:0.8rem;color:rgba(255,255,255,0.5);text-align:center;font-style:italic;position:relative;z-index:5;}
+</style>
+</head>
+<body>
+
+<!-- ===================== PANTALLA 1: BIENVENIDA ===================== -->
+<div class="screen active" id="screen1">
+  <div class="s1-sun"></div>
+  <div class="s1-cloud" style="top:30px;left:20px;width:60px;height:16px;"></div>
+  <div class="s1-cloud" style="top:24px;left:30px;width:36px;height:14px;"></div>
+  <div class="s1-cloud" style="top:60px;left:180px;width:70px;height:16px;"></div>
+  <div class="s1-cloud" style="top:54px;left:195px;width:40px;height:14px;"></div>
+
+  <div class="s1-card">
+    <div class="s1-title">Hola 💚<br>¿Quieres jugar<br>un juego?</div>
+    <div class="s1-sub">Un pequeño juego hecho<br>con todo mi amor ✨</div>
+    <button class="s1-btn-yes" id="s1_btnYes">▶ Sí, quiero</button>
+  </div>
+
+  <div class="s1-msg" id="s1_msg"></div>
+  <button class="s1-btn-no" id="s1_btnNo">No me interesa</button>
+
+  <div class="s1-ground">
+    <div class="s1-dirt"></div>
+    <div class="s1-grass"></div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 2: PREGUNTA DE FECHA ===================== -->
+<div class="screen" id="screen2">
+  <div class="s2-star" style="top:20px;left:30px;"></div>
+  <div class="s2-star" style="top:40px;left:80px;"></div>
+  <div class="s2-star" style="top:15px;left:200px;"></div>
+  <div class="s2-star" style="top:55px;left:280px;"></div>
+  <div class="s2-star" style="top:30px;left:320px;"></div>
+  <div class="s2-star" style="top:70px;left:150px;"></div>
+
+  <div class="s2-torch" style="bottom:100px;left:24px;"><div class="s2-flame"></div></div>
+  <div class="s2-torch" style="bottom:100px;right:24px;"><div class="s2-flame"></div></div>
+
+  <div class="s2-card">
+    <div class="s2-title">Prueba<br>de Fuego 🔥</div>
+    <div class="s2-sub">Antes de continuar, debes<br>demostrar que recuerdas<br>este momento tan especial.</div>
+    <div class="s2-sub" style="color:#2b2b2b;font-size:9px;margin-bottom:14px;">¿Qué día nos conocimos?</div>
+    <input type="text" class="s2-inp" id="s2_dateInput" placeholder="DD/MM/AAAA">
+    <button class="s2-btn-send" id="s2_btnSend">Enviar ▶</button>
+    <div class="s2-alert" id="s2_alert"></div>
+  </div>
+
+  <div class="s2-stone-row"></div>
+</div>
+
+<!-- ===================== PANTALLA 3: LABERINTO ===================== -->
+<div class="screen" id="screen3">
+  <div class="s3-tree-trunk" style="left:6px;"></div>
+  <div class="s3-canopy" style="left:0;width:70px;"></div>
+  <div class="s3-tree-trunk" style="right:6px;"></div>
+  <div class="s3-canopy" style="right:0;width:70px;"></div>
+
+  <div class="s3-header">Nivel 1: Laberinto 🌲</div>
+  <div class="s3-goal-label">¡Encuentra a tu amor! 💕</div>
+
+  <div class="s3-maze-scroll">
+    <div class="s3-maze-container" id="s3_maze"></div>
+  </div>
+
+  <div class="s3-controls">
+    <button class="s3-ctrl-btn s3-up" id="s3_up">↑</button>
+    <button class="s3-ctrl-btn s3-left" id="s3_left">←</button>
+    <button class="s3-ctrl-btn s3-down" id="s3_down">↓</button>
+    <button class="s3-ctrl-btn s3-right" id="s3_right">→</button>
+  </div>
+
+  <div class="s3-winMsg" id="s3_winMsg">
+    <div class="s3-winCard">
+      <div class="s3-t">¡Lo lograste! 🎉</div>
+      <div class="s3-hearts-line">
+        <!-- 👉 Foto de Daniel -->
+        <div class="s3-face"><img src="imgs/daniel.jpeg" alt="Daniel" onerror="this.style.display='none'"></div>
+        <div style="font-size:22px;">💗</div>
+        <!-- 👉 Foto de Lucía -->
+        <div class="s3-face s3-two"><img src="imgs/lucia.jpeg" alt="Lucía" onerror="this.style.display='none'"></div>
+      </div>
+      <button class="s3-continue-btn" id="s3_btnContinue">Continuar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 4: CAMINO A CASA ===================== -->
+<div class="screen" id="screen4">
+  <div class="s4-cloud" style="top:14px;left:10px;width:50px;height:14px;"></div>
+  <div class="s4-cloud" style="top:24px;left:250px;width:60px;height:14px;"></div>
+  <div class="s4-tree-trunk" style="left:4px;"></div><div class="s4-canopy" style="left:-6px;"></div>
+  <div class="s4-tree-trunk" style="right:4px;"></div><div class="s4-canopy" style="right:-6px;"></div>
+
+  <div class="s4-header">Nivel 2: Camino a Casa 🏡</div>
+  <div class="s4-sub-label">¡Esquiva a los mobs y llega a donde tu amor! 💕</div>
+
+  <div class="s4-board" id="s4_board">
+    <div class="s4-house"><div class="s4-house-roof"></div><div class="s4-house-base"></div><div class="s4-house-window"></div><div class="s4-house-door"></div></div>
+    <div class="s4-waiting-char">
+      <!-- 👉 Foto de Lucía (ella espera) -->
+      <img src="imgs/lucia.jpeg" alt="Lucía" onerror="this.style.display='none'">
+    </div>
+    <div id="s4_player" class="s4-player">
+      <!-- 👉 Foto de Daniel -->
+      <img src="imgs/daniel.jpeg" alt="Daniel" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <div class="s4-msg" id="s4_msg"></div>
+
+  <div class="s4-controls">
+    <button class="s4-ctrl-btn s4-up" id="s4_up">↑</button>
+    <button class="s4-ctrl-btn s4-left" id="s4_left">←</button>
+    <button class="s4-ctrl-btn s4-down" id="s4_down">↓</button>
+    <button class="s4-ctrl-btn s4-right" id="s4_right">→</button>
+  </div>
+
+  <div class="s4-winMsg" id="s4_winMsg">
+    <div class="s4-winCard">
+      <div class="s4-t">¡Lo lograste! 🎉</div>
+      <div class="s4-hearts-line">
+        <div class="s4-face"><img src="imgs/daniel.jpeg" alt="Daniel" onerror="this.style.display='none'"></div>
+        <div style="font-size:20px;">💗</div>
+        <div class="s4-face s4-two"><img src="imgs/lucia.jpeg" alt="Lucía" onerror="this.style.display='none'"></div>
+      </div>
+      <button class="s4-continue-btn" id="s4_btnContinue">Continuar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 5: MOTO ===================== -->
+<div class="screen" id="screen5">
+  <div class="s5-moon"></div>
+
+  <div class="s5-header">Nivel 3: Aventura en Moto 🏍️</div>
+  <div class="s5-sub-label">¡Esquiva obstáculos y recoge flores para tu amor! 💕</div>
+
+  <div class="s5-hud">
+    <div class="s5-hearts" id="s5_hearts"></div>
+    <div class="s5-flower-count" id="s5_flowerCount">🌼 x 0</div>
+  </div>
+  <div class="s5-progress-bar"><div class="s5-progress-fill" id="s5_progressFill"></div></div>
+
+  <div class="s5-gameArea" id="s5_gameArea">
+    <div id="s5_starsLayer"></div>
+    <div class="s5-tree-silh2" style="left:10px;"><div class="s5-leaf"></div><div class="s5-trunk"></div></div>
+    <div class="s5-tree-silh2" style="right:14px;"><div class="s5-leaf"></div><div class="s5-trunk"></div></div>
+    <div class="s5-ground-strip"></div>
+    <div class="s5-player" id="s5_player">
+      <div class="s5-bike-frame"></div>
+      <div class="s5-bike-tank"></div>
+      <div class="s5-bike-fender-f"></div>
+      <div class="s5-bike-fork"></div>
+      <div class="s5-handlebar"></div>
+      <div class="s5-exhaust"></div>
+      <div class="s5-wheel s5-b"></div><div class="s5-wheel s5-f"></div>
+      <div class="s5-bike-seat"></div>
+      <div class="s5-rider-arm"></div>
+      <div class="s5-rider-body"></div>
+      <div class="s5-rider-hair"></div>
+      <!-- 👉 Foto de Daniel -->
+      <div class="s5-rider-head"><img src="imgs/daniel.jpeg" alt="Daniel" onerror="this.style.display='none'"></div>
+    </div>
+  </div>
+
+  <div class="s5-restartMsg" id="s5_restartMsg">
+    <div class="s5-restartCard">¡Te quedaste sin corazones!<br>Reiniciando... 💥</div>
+  </div>
+
+  <div class="s5-finishScene" id="s5_finishScene">
+    <div class="s5-finishCard">
+      <div class="s5-t">¡Lo lograste! 🎉</div>
+      <div class="s5-hearts-line">
+        <div class="s5-face"><img src="imgs/daniel.jpeg" alt="Daniel" onerror="this.style.display='none'"></div>
+        <div style="font-size:20px;">💗</div>
+        <div class="s5-face s5-two"><img src="imgs/lucia.jpeg" alt="Lucía" onerror="this.style.display='none'"></div>
+      </div>
+      <div class="s5-flowersmsg" id="s5_flowersMsg"></div>
+      <div class="s5-finish-flower-badge" id="s5_finishFlowerBadge">🌼 x 0 recogidas</div>
+
+      <div class="s5-finish-btns">
+        <button class="s5-subtle-btn" id="s5_btnRestartFinish">↺ Jugar de nuevo</button>
+        <button class="s5-subtle-btn s5-primary" id="s5_btnContinue">Continuar →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 6: SORPRESA FINAL ===================== -->
+<div class="screen" id="screen6">
+  <div id="s6_fallLayer"></div>
+
+  <div class="s6-badge">✦ 22 de Junio, 2026 ✦</div>
+  <div class="s6-title">Felices <span>5 Meses</span></div>
+  <div class="s6-subtitle">mi amor 💜</div>
+
+  <div class="s6-photo-frame">
+    <!-- 👉 Reemplazar src="" por la foto que preparaste -->
+    <img src="imgs/amor.jpeg" alt="Nuestra foto" onerror="this.style.display='none'">
+  </div>
+
+  <div class="s6-player-box">
+    <button class="s6-play-btn" id="s6_playBtn">▶</button>
+    <div class="s6-song-info">
+      <div class="s6-song-title">Something Stupid</div>
+      <div class="s6-song-artist">Frank &amp; Nancy Sinatra</div>
+    </div>
+    <div class="s6-wave"><span></span><span></span><span></span><span></span></div>
+  </div>
+
+  <!-- 👉 Audio: reemplazar src con el nombre de tu archivo mp3 (debe estar en la misma carpeta) -->
+  <audio id="s6_audio" src="audio.mp3" loop></audio>
+
+  <div class="s6-lyric-box">
+    <div class="s6-lyric-text" id="s6_lyricText"></div>
+  </div>
+
+  <div class="s6-final-msg">Hecho con todo mi amor para Daniel — Lucía 💜</div>
+</div>
+
+<script>
+/* ============ NAVEGACIÓN ENTRE PANTALLAS ============ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ============ PANTALLA 1: BIENVENIDA ============ */
+(function(){
+  const wrap=document.getElementById('screen1');
+  const btnNo=document.getElementById('s1_btnNo');
+  const btnYes=document.getElementById('s1_btnYes');
+  const msg=document.getElementById('s1_msg');
+
+  function placeInitial(){
+    const wr=wrap.getBoundingClientRect();
+    btnNo.style.position='absolute';
+    btnNo.style.left=(wr.width/2-70)+'px';
+    btnNo.style.top=(wr.height-160)+'px';
+  }
+  window.addEventListener('load',placeInitial);
+  setTimeout(placeInitial,50);
+
+  function escapeButton(){
+    const wr=wrap.getBoundingClientRect();
+    const bw=btnNo.offsetWidth||150;
+    const bh=btnNo.offsetHeight||44;
+    const maxX=Math.max(10,wr.width-bw-10);
+    const maxY=Math.max(10,wr.height-bh-160);
+    btnNo.style.left=(Math.random()*maxX)+'px';
+    btnNo.style.top=(Math.random()*maxY)+'px';
+    const phrases=['¡No te dejo ir! 😏','Inténtalo de nuevo 💚','Nop, quieras o no 😄','¡Casi! Pero no 🙈','Ni lo pienses 💚'];
+    msg.textContent=phrases[Math.floor(Math.random()*phrases.length)];
+  }
+  btnNo.addEventListener('mouseenter',escapeButton);
+  btnNo.addEventListener('click',(e)=>{e.preventDefault();escapeButton();});
+  btnNo.addEventListener('touchstart',(e)=>{e.preventDefault();escapeButton();});
+
+  btnYes.addEventListener('click',()=>{ showScreen('screen2'); });
+})();
+
+/* ============ PANTALLA 2: PREGUNTA DE FECHA ============ */
+(function(){
+  const input=document.getElementById('s2_dateInput');
+  const btn=document.getElementById('s2_btnSend');
+  const alertBox=document.getElementById('s2_alert');
+  const correctAnswers=['27/07/2025','27-07-2025'];
+
+  btn.addEventListener('click',()=>{
+    const val=input.value.trim();
+    if(correctAnswers.includes(val)){
+      alertBox.style.background='#4a8a1a';
+      alertBox.style.borderColor='#2f5a10';
+      alertBox.textContent='¡Correcto! Sabía que lo recordarías 💚';
+      alertBox.classList.add('show');
+      setTimeout(()=>{ showScreen('screen3'); initMaze(); },1200);
+    } else {
+      alertBox.style.background='#c0392b';
+      alertBox.style.borderColor='#6b1f16';
+      alertBox.textContent='Casi le pegas, síguelo intentando para avanzar!';
+      alertBox.classList.add('show');
+      input.value='';
+    }
+  });
+})();
+
+/* ============ PANTALLA 3: LABERINTO ============ */
+let mazeInitialized=false;
+function initMaze(){
+  if(mazeInitialized) return;
+  mazeInitialized=true;
+
+  function generateMaze(n){
+    const size=2*n-1;
+    const maze=Array.from({length:size},()=>Array(size).fill(1));
+    const visited=Array.from({length:n},()=>Array(n).fill(false));
+    function neighbors(cx,cy){
+      const dirs=[[0,-1],[0,1],[-1,0],[1,0]];
+      const res=[];
+      for(const [dx,dy] of dirs){
+        const nx=cx+dx, ny=cy+dy;
+        if(nx>=0&&ny>=0&&nx<n&&ny<n&&!visited[ny][nx]) res.push([nx,ny,dx,dy]);
+      }
+      return res;
+    }
+    let stack=[[0,0]];
+    visited[0][0]=true;
+    maze[0][0]=0;
+    while(stack.length){
+      const [cx,cy]=stack[stack.length-1];
+      const nbrs=neighbors(cx,cy);
+      if(nbrs.length===0){stack.pop();continue;}
+      const [nx,ny,dx,dy]=nbrs[Math.floor(Math.random()*nbrs.length)];
+      maze[cy*2+dy][cx*2+dx]=0;
+      maze[ny*2][nx*2]=0;
+      visited[ny][nx]=true;
+      stack.push([nx,ny]);
+    }
+    return maze;
+  }
+
+  const N=15;
+  const grid=generateMaze(N);
+  const size=grid.length;
+  let px=0, py=0;
+  const goalX=size-1, goalY=size-1;
+  const CELL=16;
+  const mazeEl=document.getElementById('s3_maze');
+  mazeEl.style.gridTemplateColumns=`repeat(${size},${CELL}px)`;
+  mazeEl.style.gridTemplateRows=`repeat(${size},${CELL}px)`;
+
+  function render(){
+    mazeEl.innerHTML='';
+    for(let y=0;y<size;y++){
+      for(let x=0;x<size;x++){
+        const cell=document.createElement('div');
+        cell.className='s3-cell '+(grid[y][x]===1?'s3-wall':'s3-path'+(y===0?' s3-top-row':''));
+        cell.style.width=CELL+'px';
+        cell.style.height=CELL+'px';
+        if(x===0&&y===0) cell.classList.add('s3-start-cell');
+        if(x===goalX&&y===goalY) cell.classList.add('s3-goal-cell');
+        if(x===px&&y===py){
+          const p=document.createElement('div');
+          p.className='s3-player';
+          p.innerHTML='<img src="imgs/daniel.jpeg" alt="Daniel" onerror="this.style.display=&apos;none&apos;;this.parentElement.textContent=&apos;🧑&apos;;">';
+          cell.appendChild(p);
+        }
+        if(x===goalX&&y===goalY && !(px===goalX&&py===goalY)){
+          const g=document.createElement('div');
+          g.className='s3-goal-char';
+          g.innerHTML='<img src="imgs/lucia.jpeg" alt="Lucía" onerror="this.style.display=&apos;none&apos;;this.parentElement.textContent=&apos;👩&apos;;">';
+          cell.appendChild(g);
+        }
+        mazeEl.appendChild(cell);
+      }
+    }
+  }
+  render();
+
+  function move(dx,dy){
+    const nx=px+dx, ny=py+dy;
+    if(nx<0||ny<0||nx>=size||ny>=size) return;
+    if(grid[ny][nx]===1) return;
+    px=nx;py=ny;
+    render();
+    if(px===goalX&&py===goalY){
+      setTimeout(()=>{document.getElementById('s3_winMsg').classList.add('show');},200);
+    }
+  }
+
+  document.getElementById('s3_up').addEventListener('click',()=>move(0,-1));
+  document.getElementById('s3_down').addEventListener('click',()=>move(0,1));
+  document.getElementById('s3_left').addEventListener('click',()=>move(-1,0));
+  document.getElementById('s3_right').addEventListener('click',()=>move(1,0));
+  document.addEventListener('keydown',(e)=>{
+    if(!document.getElementById('screen3').classList.contains('active')) return;
+    if(e.key==='ArrowUp') move(0,-1);
+    if(e.key==='ArrowDown') move(0,1);
+    if(e.key==='ArrowLeft') move(-1,0);
+    if(e.key==='ArrowRight') move(1,0);
+  });
+
+  document.getElementById('s3_btnContinue').addEventListener('click',()=>{
+    document.getElementById('s3_winMsg').classList.remove('show');
+    showScreen('screen4');
+    initCaminoACasa();
+  });
+}
+
+/* ============ PANTALLA 4: CAMINO A CASA ============ */
+let s4Initialized=false;
+function initCaminoACasa(){
+  if(s4Initialized) return;
+  s4Initialized=true;
+
+  const CELL=54, COLS=7, ROWS=8;
+  const board=document.getElementById('s4_board');
+  board.style.width=(CELL*COLS)+'px';
+  board.style.height=(CELL*ROWS)+'px';
+
+  const laneTypes=['s4-goal','s4-grass','s4-dirt','s4-stone','s4-grass','s4-water','s4-dirt','s4-grass'];
+  laneTypes.forEach((type,r)=>{
+    const lane=document.createElement('div');
+    lane.className='s4-lane '+type;
+    lane.style.top=(r*CELL)+'px';
+    lane.style.height=CELL+'px';
+    board.insertBefore(lane,board.firstChild);
+  });
+
+  function mobHTML(type){
+    switch(type){
+      case 'creeper':
+        return `<div class="s4-creeper-b"><span class="s4-px e1"></span><span class="s4-px e2"></span><span class="s4-px m1"></span><span class="s4-px m2"></span><span class="s4-px m3"></span><span class="s4-px m4"></span></div>`;
+      case 'spider':
+        return `<div class="s4-spider-b">
+          <span class="s4-leg2 l1"></span><span class="s4-leg2 l2"></span><span class="s4-leg2 l3"></span>
+          <span class="s4-leg2 r1"></span><span class="s4-leg2 r2"></span><span class="s4-leg2 r3"></span>
+          <span class="s4-eye a"></span><span class="s4-eye b"></span></div>`;
+      case 'skeleton':
+        return `<div class="s4-skel-wrap"><div class="s4-skel-head"><span class="s4-eye s4-l"></span><span class="s4-eye s4-r"></span></div><div class="s4-skel-body"></div><div class="s4-skel-legs"></div><div class="s4-skel-bow"></div></div>`;
+      case 'zombie':
+        return `<div class="s4-zom-wrap"><div class="s4-zom-head"><span class="s4-eye s4-l"></span><span class="s4-eye s4-r"></span></div><div class="s4-zom-arm s4-l"></div><div class="s4-zom-arm s4-r"></div><div class="s4-zom-body"></div><div class="s4-zom-legs"></div></div>`;
+      case 'ghast':
+        return `<div class="s4-ghast-wrap"><div class="s4-ghast-head"><span class="s4-eye s4-l"></span><span class="s4-eye s4-r"></span><span class="s4-mouth"></span></div>
+          <span class="s4-tent t1"></span><span class="s4-tent t2"></span><span class="s4-tent t3"></span><span class="s4-tent t4"></span><span class="s4-tent t5"></span></div>`;
+      case 'enderman':
+        return `<div class="s4-ender-wrap"><div class="s4-ender-head"><span class="s4-eye s4-l"></span><span class="s4-eye s4-r"></span></div><div class="s4-ender-arm s4-l"></div><div class="s4-ender-arm s4-r"></div><div class="s4-ender-body"></div><div class="s4-ender-legs"></div></div>`;
+    }
+  }
+
+  const boxSize={creeper:{w:28,h:44},spider:{w:44,h:18},skeleton:{w:34,h:46},zombie:{w:34,h:46},ghast:{w:38,h:44},enderman:{w:24,h:48}};
+  const mobConfig=[
+    {row:1,type:'creeper',speed:0.9,dir:1,count:2},
+    {row:2,type:'spider',speed:1.6,dir:-1,count:2},
+    {row:3,type:'skeleton',speed:1.1,dir:1,count:1},
+    {row:4,type:'zombie',speed:1.0,dir:-1,count:2},
+    {row:5,type:'ghast',speed:0.8,dir:1,count:1},
+    {row:6,type:'enderman',speed:1.8,dir:-1,count:2},
+  ];
+
+  let mobs=[];
+  mobConfig.forEach(cfg=>{
+    for(let i=0;i<cfg.count;i++){
+      const el=document.createElement('div');
+      el.className='s4-mobbox';
+      el.innerHTML=mobHTML(cfg.type);
+      const sz=boxSize[cfg.type];
+      el.style.top=(cfg.row*CELL + (CELL-sz.h)/2)+'px';
+      board.appendChild(el);
+      mobs.push({el,row:cfg.row,x:(i*(CELL*COLS/cfg.count))+Math.random()*40,speed:cfg.speed,dir:cfg.dir,w:sz.w,h:sz.h});
+    }
+  });
+
+  let px=3, py=7;
+  const playerEl=document.getElementById('s4_player');
+  function updatePlayerPos(){
+    playerEl.style.left=(px*CELL+11)+'px';
+    playerEl.style.top=(py*CELL+11)+'px';
+  }
+  updatePlayerPos();
+
+  let s4gameOver=false;
+  function move(dx,dy){
+    if(s4gameOver) return;
+    const nx=px+dx, ny=py+dy;
+    if(nx<0||nx>=COLS||ny<0||ny>=ROWS) return;
+    px=nx;py=ny;
+    updatePlayerPos();
+    if(py===0){
+      s4gameOver=true;
+      setTimeout(()=>{document.getElementById('s4_winMsg').classList.add('show');},150);
+    }
+  }
+  document.getElementById('s4_up').addEventListener('click',()=>move(0,-1));
+  document.getElementById('s4_down').addEventListener('click',()=>move(0,1));
+  document.getElementById('s4_left').addEventListener('click',()=>move(-1,0));
+  document.getElementById('s4_right').addEventListener('click',()=>move(1,0));
+  document.addEventListener('keydown',(e)=>{
+    if(!document.getElementById('screen4').classList.contains('active')) return;
+    if(e.key==='ArrowUp'){e.preventDefault();move(0,-1);}
+    if(e.key==='ArrowDown'){e.preventDefault();move(0,1);}
+    if(e.key==='ArrowLeft'){e.preventDefault();move(-1,0);}
+    if(e.key==='ArrowRight'){e.preventDefault();move(1,0);}
+  });
+
+  const boardWidth=CELL*COLS;
+  const msg=document.getElementById('s4_msg');
+  function resetPlayer(){
+    px=3;py=7;
+    updatePlayerPos();
+    msg.textContent='¡Oh no! Intenta de nuevo 💥';
+    setTimeout(()=>{msg.textContent='';},1400);
+  }
+
+  function loop(){
+    if(!s4gameOver){
+      mobs.forEach(m=>{
+        m.x+=m.speed*m.dir;
+        if(m.x>boardWidth+20) m.x=-m.w-20;
+        if(m.x<-m.w-20) m.x=boardWidth+20;
+        m.el.style.left=m.x+'px';
+      });
+      const pRect={x:px*CELL+11,y:py*CELL+11,w:32,h:32};
+      for(const m of mobs){
+        if(m.row!==py) continue;
+        const mRect={x:m.x,y:m.row*CELL+(CELL-m.h)/2,w:m.w,h:m.h};
+        if(pRect.x<mRect.x+mRect.w-8 && pRect.x+pRect.w-8>mRect.x && pRect.y<mRect.y+mRect.h-8 && pRect.y+pRect.h-8>mRect.y){
+          resetPlayer();
+          break;
+        }
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  document.getElementById('s4_btnContinue').addEventListener('click',()=>{
+    document.getElementById('s4_winMsg').classList.remove('show');
+    showScreen('screen5');
+    initMoto();
+  });
+}
+
+/* ============ PANTALLA 5: MOTO ============ */
+let s5Initialized=false;
+function initMoto(){
+  if(s5Initialized) return;
+  s5Initialized=true;
+
+  const starsLayer=document.getElementById('s5_starsLayer');
+  for(let i=0;i<45;i++){
+    const s=document.createElement('div');
+    s.className='s5-star';
+    const sz=1+Math.random()*2.4;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*70}%;left:${Math.random()*100}%;animation-delay:${Math.random()*2}s;`;
+    starsLayer.appendChild(s);
+  }
+
+  const gameArea=document.getElementById('s5_gameArea');
+  const player=document.getElementById('s5_player');
+  const heartsEl=document.getElementById('s5_hearts');
+  const flowerCountEl=document.getElementById('s5_flowerCount');
+  const progressFill=document.getElementById('s5_progressFill');
+  const restartMsg=document.getElementById('s5_restartMsg');
+  const finishScene=document.getElementById('s5_finishScene');
+  const flowersMsg=document.getElementById('s5_flowersMsg');
+  const finishFlowerBadge=document.getElementById('s5_finishFlowerBadge');
+
+  let hearts=6, flowerCount=0, progress=0, goalDistance=3400;
+  let speed=3.2, isJumping=false, invulnerable=false, gameOver=false, finished=false;
+  let obstacles=[], flowers=[];
+  let obsTimer=0, flowerTimer=0;
+  const areaHeight=300, groundHeight=64, areaWidth=460;
+
+  function renderHearts(){
+    heartsEl.innerHTML='';
+    for(let i=0;i<6;i++){
+      const h=document.createElement('span');
+      h.className='s5-heart';
+      h.textContent=i<hearts?'❤️':'🖤';
+      heartsEl.appendChild(h);
+    }
+  }
+  renderHearts();
+
+  function jump(){
+    if(isJumping||gameOver||finished) return;
+    isJumping=true;
+    player.classList.add('s5-jumping');
+  }
+  player.addEventListener('animationend',()=>{
+    player.classList.remove('s5-jumping');
+    isJumping=false;
+  });
+  document.addEventListener('keydown',(e)=>{
+    if(!document.getElementById('screen5').classList.contains('active')) return;
+    if(e.code==='Space'||e.key==='ArrowUp'){e.preventDefault();jump();}
+  });
+  gameArea.addEventListener('click',jump);
+  gameArea.addEventListener('touchstart',(e)=>{e.preventDefault();jump();});
+
+  function spawnObstacle(){
+    const types=['cactus','tree','stone'];
+    const type=types[Math.floor(Math.random()*types.length)];
+    const el=document.createElement('div');
+    el.className='s5-obstacle';
+    let w,h;
+    if(type==='cactus'){w=18;h=34;el.classList.add('s5-obs-cactus');}
+    else if(type==='tree'){w=9;h=28;el.classList.add('s5-obs-tree-trunk');el.innerHTML='<div class="s5-obs-tree-leaf"></div>';}
+    else{w=28;h=20;el.classList.add('s5-obs-stone');}
+    el.style.width=w+'px';el.style.height=h+'px';
+    el.style.left=areaWidth+'px';
+    gameArea.appendChild(el);
+    obstacles.push({el,x:areaWidth,w,h});
+  }
+
+  function spawnFlower(){
+    const el=document.createElement('div');
+    el.className='s5-flower-el';
+    el.textContent='🌼';
+    el.style.left=areaWidth+'px';
+    gameArea.appendChild(el);
+    flowers.push({el,x:areaWidth});
+  }
+
+  function endRun(success){
+    finished=success;
+    gameOver=!success;
+    if(success){
+      flowersMsg.textContent=flowerCount+' flores para mi amada 🌼💛';
+      finishFlowerBadge.textContent='🌼 x '+flowerCount+' recogidas';
+      finishScene.classList.add('show');
+    } else {
+      restartMsg.classList.add('show');
+      setTimeout(()=>{
+        restartMsg.classList.remove('show');
+        resetRun();
+      },1500);
+    }
+  }
+
+  function resetRun(){
+    hearts=6;flowerCount=0;progress=0;gameOver=false;finished=false;
+    renderHearts();
+    flowerCountEl.textContent='🌼 x 0';
+    progressFill.style.width='0%';
+    obstacles.forEach(o=>o.el.remove());
+    flowers.forEach(f=>f.el.remove());
+    obstacles=[];flowers=[];
+    finishScene.classList.remove('show');
+    restartMsg.classList.remove('show');
+  }
+
+  document.getElementById('s5_btnRestartFinish').addEventListener('click',resetRun);
+  document.getElementById('s5_btnContinue').addEventListener('click',()=>{
+    finishScene.classList.remove('show');
+    showScreen('screen6');
+    initFinal();
+  });
+
+  function loop(){
+    if(!gameOver && !finished){
+      progress+=speed;
+      progressFill.style.width=Math.min(100,(progress/goalDistance*100))+'%';
+      if(progress>=goalDistance){ endRun(true); }
+
+      obsTimer++;
+      if(obsTimer>80+Math.random()*45){ spawnObstacle(); obsTimer=0; }
+      flowerTimer++;
+      if(flowerTimer>55+Math.random()*35){ spawnFlower(); flowerTimer=0; }
+
+      const pRect=player.getBoundingClientRect();
+      const gRect=gameArea.getBoundingClientRect();
+      const pLeft=pRect.left-gRect.left+18, pRight=pRect.right-gRect.left-18;
+      const pTop=pRect.top-gRect.top+22, pBottom=pRect.bottom-gRect.top-5;
+
+      obstacles=obstacles.filter(o=>{
+        o.x-=speed;
+        o.el.style.left=o.x+'px';
+        if(o.x<-40){o.el.remove();return false;}
+        const oLeft=o.x+3, oRight=o.x+o.w-3;
+        const oTop=areaHeight-groundHeight-o.h+2, oBottom=areaHeight-groundHeight;
+        if(!invulnerable && pRight>oLeft && pLeft<oRight && pBottom>oTop && pTop<oBottom){
+          hearts--;
+          renderHearts();
+          invulnerable=true;
+          setTimeout(()=>{invulnerable=false;},900);
+          if(hearts<=0){ endRun(false); }
+        }
+        return true;
+      });
+
+      flowers=flowers.filter(f=>{
+        f.x-=speed;
+        f.el.style.left=f.x+'px';
+        if(f.x<-30){f.el.remove();return false;}
+        const fLeft=f.x, fRight=f.x+22;
+        const fTop=areaHeight-groundHeight-132-10, fBottom=areaHeight-groundHeight-132+12;
+        if(pRight>fLeft && pLeft<fRight && pBottom>fTop && pTop<fBottom){
+          flowerCount++;
+          flowerCountEl.textContent='🌼 x '+flowerCount;
+          f.el.remove();
+          return false;
+        }
+        return true;
+      });
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+/* ============ PANTALLA 6: SORPRESA FINAL ============ */
+let s6Initialized=false;
+function initFinal(){
+  if(s6Initialized) return;
+  s6Initialized=true;
+
+  const fallLayer=document.getElementById('s6_fallLayer');
+  const items=['💜','⭐','✨','💫','❤️','🪻'];
+  for(let i=0;i<26;i++){
+    const el=document.createElement('div');
+    el.className='s6-falling';
+    el.textContent=items[Math.floor(Math.random()*items.length)];
+    const size=10+Math.random()*16;
+    el.style.cssText=`left:${Math.random()*100}%;font-size:${size}px;animation-duration:${5+Math.random()*7}s;animation-delay:${Math.random()*8}s;`;
+    fallLayer.appendChild(el);
+  }
+
+  const audio=document.getElementById('s6_audio');
+  const playBtn=document.getElementById('s6_playBtn');
+  let playing=false;
+  playBtn.addEventListener('click',()=>{
+    playing=!playing;
+    playBtn.textContent=playing?'❚❚':'▶';
+    if(playing){ audio.play().catch(()=>{}); } else { audio.pause(); }
+  });
+
+  // ====== AQUÍ PEGAS TU FRAGMENTO DE LA CANCIÓN ======
+  // 👉 Reemplaza el texto de abajo por el fragmento que tú elijas
+  const lyricFragment = "✨ El momento es el correcto, tu perfume llena mi cabeza, las estrella se ponen rojas y la noche es tan azul... Y luego voy y lo estropeo todo diciendo algo estupido como TE AMO 💘 ✨";
+  // =====================================
+
+  function typewriter(el,text,speed){
+    let i=0;
+    const cursor=document.createElement('span');
+    cursor.className='s6-cursor';
+    el.innerHTML='';
+    el.appendChild(cursor);
+    const id=setInterval(()=>{
+      if(i<text.length){
+        el.insertBefore(document.createTextNode(text[i]),cursor);
+        i++;
+      } else {
+        clearInterval(id);
+      }
+    },speed);
+  }
+
+  setTimeout(()=>{
+    typewriter(document.getElementById('s6_lyricText'),lyricFragment,55);
+    playBtn.click();
+  },1000);
+}
+</script>
+</body>
+</html>
