@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hecho solo para ti ❤️</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100%;overflow-x:hidden;overflow-y:auto;}
+body{
+  background:radial-gradient(ellipse at 50% 15%,#3a0a12 0%,#1a0509 55%,#0a0203 100%);
+  font-family:'Playfair Display',serif;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;
+}
+
+canvas#bg{position:fixed;inset:0;z-index:0;}
+.falling{position:fixed;top:-30px;opacity:0;z-index:2;pointer-events:none;animation:fall linear infinite;}
+@keyframes fall{
+  0%{opacity:0;transform:translateY(0) translateX(0) rotate(0deg);}
+  8%{opacity:0.9;}90%{opacity:0.55;}
+  100%{opacity:0;transform:translateY(110vh) translateX(20px) rotate(320deg);}
+}
+
+/* ===== Reproductor de música persistente ===== */
+#musicBtn{
+  position:fixed;top:14px;right:14px;z-index:20;
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(220,50,60,0.25);border:1px solid rgba(255,150,150,0.4);
+  color:#ffe0e0;font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+#musicBtn:hover{background:rgba(220,50,60,0.4);}
+
+/* ===== Vistas ===== */
+.view{
+  display:none;width:100%;min-height:100vh;
+  flex-direction:column;align-items:center;justify-content:center;
+  position:relative;z-index:5;padding:5rem 1.4rem 3rem;
+}
+.view.active{display:flex;animation:fadeInView 0.6s ease forwards;}
+@keyframes fadeInView{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.script-title{
+  font-family:'Great Vibes',cursive;font-size:2.1rem;color:#ffd9d9;
+  text-shadow:0 0 20px rgba(255,120,120,0.5);margin-bottom:0.3rem;text-align:center;
+}
+.subtitle{
+  font-size:0.85rem;color:rgba(255,220,220,0.65);font-style:italic;
+  margin-bottom:2.2rem;text-align:center;
+}
+
+/* ===== Grid de tarjetas ===== */
+.card-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:1.1rem;width:100%;max-width:440px;
+}
+.card{
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,150,150,0.28);
+  border-radius:20px;padding:1.6rem 1rem;text-align:center;cursor:pointer;
+  transition:transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+.card:hover{transform:translateY(-4px);background:rgba(255,255,255,0.09);box-shadow:0 10px 26px rgba(220,40,60,0.25);}
+.card .emoji{font-size:2.4rem;margin-bottom:0.6rem;display:block;}
+.card .label{font-size:0.88rem;color:#ffe0e0;font-style:italic;}
+
+/* ===== Botón casita (volver) ===== */
+.home-btn{
+  position:fixed;top:14px;left:14px;z-index:20;
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,150,150,0.35);
+  color:#ffe0e0;font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.home-btn:hover{background:rgba(255,255,255,0.16);}
+
+/* ===== Chocolates ===== */
+.choco-box{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;
+  width:100%;max-width:320px;margin-bottom:1.6rem;
+}
+.choco{
+  aspect-ratio:1;border-radius:10px;cursor:pointer;
+  background:linear-gradient(160deg,#6b3a1e,#3d1f0e);
+  box-shadow:inset -3px -3px 0 rgba(0,0,0,0.35), inset 3px 3px 0 rgba(255,180,120,0.12);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  transition:transform 0.2s;
+}
+.choco:hover{transform:scale(1.08);}
+.choco.opened{background:linear-gradient(160deg,#8a5030,#4a2810);}
+.choco-msg-box{
+  min-height:64px;max-width:340px;text-align:center;
+  font-size:0.95rem;color:rgba(255,225,225,0.9);font-style:italic;line-height:1.7;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,150,150,0.25);
+  border-radius:16px;padding:1rem 1.2rem;
+}
+
+.bouquet-msg{
+  max-width:340px;text-align:center;font-size:0.95rem;color:rgba(255,225,225,0.9);
+  font-style:italic;line-height:1.8;margin-top:0.6rem;
+}
+
+/* ===== Marco de foto (ramo) ===== */
+.photo-frame{
+  width:230px;height:230px;border-radius:16px;
+  border:2px solid rgba(255,150,150,0.3);
+  box-shadow:0 14px 40px rgba(0,0,0,0.4);
+  overflow:hidden;margin:0 auto 1.2rem;
+  background:linear-gradient(160deg,rgba(60,10,18,0.6),rgba(20,4,8,0.75));
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;object-position:10%;transform:scale(1.16);}
+.photo-placeholder{
+  color:rgba(255,210,210,0.45);font-size:0.85rem;text-align:center;
+  padding:1rem;font-style:italic;
+}
+
+/* ===== Osito ===== */
+.bear-wrap{position:relative;width:190px;height:210px;margin-bottom:1.4rem;cursor:pointer;}
+.bear-ear{position:absolute;width:38px;height:38px;border-radius:50%;background:#8a5a34;top:0;}
+.bear-ear.l{left:8px;} .bear-ear.r{right:8px;}
+.bear-ear::after{content:'';position:absolute;inset:8px;border-radius:50%;background:#6b4426;}
+.bear-head{position:absolute;top:20px;left:20px;right:20px;height:110px;border-radius:50% 50% 45% 45%;background:#a06a3c;box-shadow:inset -6px -6px 0 rgba(0,0,0,0.12);}
+.bear-snout{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:56px;height:44px;border-radius:50%;background:#d4a870;}
+.bear-nose{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);width:14px;height:10px;border-radius:50%;background:#3a2210;}
+.bear-eye{position:absolute;top:52px;width:6px;height:8px;border-radius:50%;background:#2a1808;}
+.bear-eye.l{left:52px;} .bear-eye.r{right:52px;}
+.bear-body{position:absolute;bottom:0;left:15px;right:15px;height:95px;border-radius:50% 50% 40% 40%/60% 60% 40% 40%;background:#a06a3c;box-shadow:inset -6px -6px 0 rgba(0,0,0,0.12);}
+.bear-arm{position:absolute;bottom:20px;width:30px;height:55px;border-radius:20px;background:#8a5a34;}
+.bear-arm.l{left:-6px;transform:rotate(20deg);} .bear-arm.r{right:-6px;transform:rotate(-20deg);}
+.bear-heart{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  font-size:1.8rem;transition:transform 0.3s;z-index:6;
+}
+.bear-wrap.hugged .bear-heart{transform:translateX(-50%) scale(1.45);}
+.bear-wrap.hugged .bear-arm.l{transform:rotate(45deg) translate(6px,-6px);}
+.bear-wrap.hugged .bear-arm.r{transform:rotate(-45deg) translate(-6px,-6px);}
+.bear-msg{
+  max-width:340px;text-align:center;font-size:0.95rem;color:rgba(255,225,225,0.9);
+  font-style:italic;line-height:1.8;min-height:50px;opacity:0;transition:opacity 0.6s;
+}
+.bear-msg.show{opacity:1;}
+.bear-hint{font-size:0.75rem;color:rgba(255,200,200,0.45);margin-top:0.6rem;}
+
+/* ===== Carta / poema ===== */
+.envelope-wrap{position:relative;width:220px;height:150px;margin-bottom:1.6rem;cursor:pointer;}
+.envelope-body{position:absolute;inset:0;background:linear-gradient(160deg,#7a2030,#4a1018);border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+.envelope-left{position:absolute;bottom:0;width:0;height:0;border-style:solid;border-width:0 0 74px 110px;border-color:transparent transparent rgba(0,0,0,0.18) transparent;}
+.envelope-right{position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 110px 74px 0;border-color:transparent rgba(255,255,255,0.05) transparent transparent;}
+.envelope-lid{
+  position:absolute;top:0;left:0;right:0;height:0;
+  border-style:solid;border-width:78px 110px 0 110px;
+  border-color:#8a2838 transparent transparent transparent;
+  transform-origin:top center;transition:transform 0.6s ease;
+}
+.envelope-wrap.open .envelope-lid{transform:rotateX(180deg);}
+.envelope-heart{position:absolute;top:56%;left:50%;transform:translate(-50%,-50%);font-size:1.6rem;z-index:5;}
+.envelope-hint{font-size:0.75rem;color:rgba(255,200,200,0.45);margin-bottom:0.4rem;}
+
+.fish-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+.fish{position:absolute;font-size:1rem;opacity:0.35;animation:swim linear infinite;}
+@keyframes swim{
+  0%{transform:translateX(-40px) translateY(0);}
+  50%{transform:translateX(50vw) translateY(-14px);}
+  100%{transform:translateX(110vw) translateY(0);}
+}
+.bubble{position:absolute;bottom:-20px;border-radius:50%;background:rgba(255,255,255,0.12);animation:bubbleUp linear infinite;}
+@keyframes bubbleUp{0%{transform:translateY(0);opacity:0;}10%{opacity:0.5;}100%{transform:translateY(-100vh);opacity:0;}}
+
+.letter-card{
+  position:relative;z-index:5;
+  background:linear-gradient(170deg,rgba(60,10,18,0.7),rgba(20,4,8,0.85));
+  border:1px solid rgba(255,150,150,0.28);
+  border-radius:18px;padding:2rem 1.6rem;
+  max-width:420px;width:100%;
+  box-shadow:0 20px 50px rgba(0,0,0,0.4);
+  text-align:center;
+}
+.letter-title{font-family:'Great Vibes',cursive;font-size:2rem;color:#ffd9d9;text-shadow:0 0 18px rgba(255,120,120,0.5);margin-bottom:1.2rem;}
+.letter-body{
+  font-size:0.95rem;color:rgba(255,230,230,0.88);line-height:2;
+  font-style:italic;white-space:pre-line;text-align:left;
+}
+.letter-signature{margin-top:1.4rem;font-size:0.8rem;color:rgba(255,190,190,0.55);text-align:right;font-style:italic;}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div id="fallLayer"></div>
+
+<button id="musicBtn">▶</button>
+<!-- 👉 Reemplaza el nombre del archivo por tu canción -->
+<audio id="bgMusic" src="chocolate.mp3" loop></audio>
+
+<!-- ===== VISTA: SELECCIÓN ===== -->
+<div class="view active" id="gridView">
+  <div class="script-title">Hecho solo para ti 💝​</div>
+  <div class="subtitle">✦ Toca una tarjeta para descubrir tu sorpresa ✦</div>
+  <div class="card-grid">
+    <div class="card" data-view="chocoView">
+      <span class="emoji">🍫</span>
+      <div class="label">Caja de chocolates</div>
+    </div>
+    <div class="card" data-view="flowerView">
+      <span class="emoji">🌹</span>
+      <div class="label">Ramo de flores</div>
+    </div>
+    <div class="card" data-view="bearView">
+      <span class="emoji">🧸</span>
+      <div class="label">Un osito de peluche</div>
+    </div>
+    <div class="card" data-view="letterView">
+      <span class="emoji">💌</span>
+      <div class="label">Una cartita para ti</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== VISTA: CHOCOLATES ===== -->
+<div class="view" id="chocoView">
+  <button class="home-btn" data-home>🏠</button>
+  <div class="script-title">Una cajita dulce</div>
+  <div class="subtitle">Toca cada chocolate para descubrir una palabra 🍫</div>
+  <div class="choco-box" id="chocoBox"></div>
+  <div class="choco-msg-box" id="chocoMsgBox">Toca un chocolate para empezar...</div>
+</div>
+
+<!-- ===== VISTA: FLORES ===== -->
+<div class="view" id="flowerView">
+  <button class="home-btn" data-home>🏠</button>
+  <div class="script-title">Un ramo para ti</div>
+  <div class="subtitle">✦</div>
+  <div class="photo-frame">
+    <!-- 👉 Reemplaza src="" por la foto de tu ramo -->
+    <img src="ramo.jpeg" alt="Ramo de flores" onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex';">
+    <div class="photo-placeholder"></div>
+  </div>
+  <div class="bouquet-msg">
+    <!-- 👉 Cambia este mensaje si quieres -->
+    Al igual que las flores, lo nuestro cada día florece un poco más 🌹💕
+  </div>
+</div>
+
+<!-- ===== VISTA: OSITO ===== -->
+<div class="view" id="bearView">
+  <button class="home-btn" data-home>🏠</button>
+  <div class="script-title">Un abrazo de oso</div>
+  <div class="subtitle">✦</div>
+  <div class="bear-wrap" id="bearWrap">
+    <div class="bear-ear l"></div><div class="bear-ear r"></div>
+    <div class="bear-head">
+      <div class="bear-eye l"></div><div class="bear-eye r"></div>
+      <div class="bear-snout"><div class="bear-nose"></div></div>
+    </div>
+    <div class="bear-heart">❤️</div>
+    <div class="bear-body"></div>
+    <div class="bear-arm l"></div><div class="bear-arm r"></div>
+  </div>
+  <div class="bear-hint" id="bearHint">toca el osito para tu abrazo 🤗</div>
+  <div class="bear-msg" id="bearMsg">
+    <!-- 👉 Cambia este mensaje si quieres -->
+    Soy adicta a tus abarazos porque siempre quiero más y nunca son suficientes 🧸💕
+  </div>
+</div>
+
+<!-- ===== VISTA: CARTA / POEMA ===== -->
+<div class="view" id="letterView">
+  <button class="home-btn" data-home>🏠</button>
+  <div class="fish-bg" id="fishBg"></div>
+  <div class="script-title">Un poema para ti</div>
+  <div class="subtitle">✦</div>
+
+  <div class="envelope-wrap" id="envelopeWrap">
+    <div class="envelope-body">
+      <div class="envelope-left"></div>
+      <div class="envelope-right"></div>
+    </div>
+    <div class="envelope-heart">💌</div>
+    <div class="envelope-lid"></div>
+  </div>
+  <div class="envelope-hint" id="envelopeHint">toca el sobre para abrirlo</div>
+
+  <div class="letter-card" id="letterCard" style="display:none;">
+    <div class="letter-title">Pececitos de colores</div>
+    <div class="letter-body" id="poemText">
+<!-- 👇👇👇 PEGA AQUÍ TU POEMA COMPLETO (reemplaza este texto) 👇👇👇 -->
+Siempre que apareces 
+siento que el tiempo se detiene, 
+y mis ojos te recorren, te acarician 
+e inmediatamente los cierro 
+y te robo un beso imaginario, 
+y le pido al tiempo que se mantenga detenido, 
+y mis ojos te gritan que te quedes quieta, 
+pero esa línea en el espacio se ve interrumpida 
+cuando volteas tu rostro, 
+me miras y sonríes, 
+y haces que en el cielo de mi alma 
+lluevan pececitos de colores, 
+y contentos barquitos de papel corren a pescarlos, 
+porque hace mucho tiempo que no comen alegría, 
+desde hace mucho tiempo tal cielo no era tan hermoso, 
+ni su mar tan habitado y colorido.
+<!-- 👆👆👆 HASTA AQUÍ 👆👆👆 -->
+    </div>
+    <div class="letter-signature">— Lucía Torres</div>
+  </div>
+</div>
+
+<script>
+/* ===== Fondo con partículas cálidas ===== */
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();
+window.addEventListener('resize',()=>{resize();initParticles();});
+function initParticles(){
+  particles=[];
+  const count=Math.floor((W*H)/9500);
+  for(let i=0;i<count;i++){
+    particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+0.3,baseAlpha:Math.random()*0.5+0.2,speed:Math.random()*0.02+0.005,phase:Math.random()*Math.PI*2,driftY:-(Math.random()*0.15+0.03)});
+  }
+}
+initParticles();
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,W,H); t+=1;
+  particles.forEach(p=>{
+    const alpha=p.baseAlpha+Math.sin(t*p.speed+p.phase)*0.25;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,170,150,${Math.max(0,Math.min(1,alpha))})`; ctx.fill();
+    p.y+=p.driftY; if(p.y<0) p.y=H;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* Pétalos y corazones cayendo (fondo general) */
+const fallLayer=document.getElementById('fallLayer');
+const fitems=['🌹','❤️','💗','🍂​'];
+for(let i=0;i<16;i++){
+  const el=document.createElement('div');
+  el.className='falling';
+  el.textContent=fitems[Math.floor(Math.random()*fitems.length)];
+  el.style.cssText=`left:${Math.random()*100}%;font-size:${12+Math.random()*12}px;animation-duration:${7+Math.random()*7}s;animation-delay:${Math.random()*9}s;`;
+  fallLayer.appendChild(el);
+}
+
+/* ===== Navegación entre vistas ===== */
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    showView(card.dataset.view);
+  });
+});
+document.querySelectorAll('[data-home]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    resetChoco();
+    resetBear();
+    resetLetter();
+    showView('gridView');
+  });
+});
+
+/* ===== Música persistente (no se detiene al cambiar de vista) ===== */
+const bgMusic=document.getElementById('bgMusic');
+const musicBtn=document.getElementById('musicBtn');
+let playing=false;
+musicBtn.addEventListener('click',()=>{
+  playing=!playing;
+  musicBtn.textContent=playing?'❚❚':'▶';
+  if(playing){ bgMusic.play().catch(()=>{}); } else { bgMusic.pause(); }
+});
+
+/* ===== Caja de chocolates ===== */
+const chocoWords=[
+  'Eres mi lugar favorito 💕',
+  'Contigo todo sabe mejor 🍫',
+  'Tu sonrisa para mí es la mas bella 😊',
+  'Contigo ahora y siempre 📍',
+  'Amo tu forma de amar 💗',
+  'Mi mejor amigo y mi gran amor 💌',
+  'Das vida a mi vida 🌹',
+  'Eres mi calma y mi chispa ✨',
+  'Tu, mi Universo completo y mi complemento 🌌'
+];
+const chocoBox=document.getElementById('chocoBox');
+const chocoMsgBox=document.getElementById('chocoMsgBox');
+chocoWords.forEach((msg,i)=>{
+  const c=document.createElement('div');
+  c.className='choco';
+  c.textContent='🍫';
+  c.addEventListener('click',()=>{
+    c.classList.add('opened');
+    c.textContent='💗';
+    chocoMsgBox.textContent=msg;
+  });
+  chocoBox.appendChild(c);
+});
+function resetChoco(){
+  document.querySelectorAll('.choco').forEach(c=>{
+    c.classList.remove('opened');
+    c.textContent='🍫';
+  });
+  chocoMsgBox.textContent='Toca un chocolate para empezar...';
+}
+
+/* ===== Osito abrazable ===== */
+const bearWrap=document.getElementById('bearWrap');
+const bearMsg=document.getElementById('bearMsg');
+const bearHint=document.getElementById('bearHint');
+bearWrap.addEventListener('click',()=>{
+  bearWrap.classList.add('hugged');
+  bearMsg.classList.add('show');
+  bearHint.style.opacity='0';
+});
+function resetBear(){
+  bearWrap.classList.remove('hugged');
+  bearMsg.classList.remove('show');
+  bearHint.style.opacity='1';
+}
+
+/* ===== Carta / sobre con poema ===== */
+const envelopeWrap=document.getElementById('envelopeWrap');
+const envelopeHint=document.getElementById('envelopeHint');
+const letterCard=document.getElementById('letterCard');
+envelopeWrap.addEventListener('click',()=>{
+  envelopeWrap.classList.add('open');
+  envelopeHint.style.opacity='0';
+  setTimeout(()=>{
+    letterCard.style.display='block';
+  },500);
+});
+function resetLetter(){
+  envelopeWrap.classList.remove('open');
+  envelopeHint.style.opacity='1';
+  letterCard.style.display='none';
+}
+
+// Pececitos y burbujas decorativas nadando de fondo
+const fishBg=document.getElementById('fishBg');
+const fishEmojis=['🫧','🐟','🐠'];
+for(let i=0;i<8;i++){
+  const f=document.createElement('div');
+  f.className='fish';
+  f.textContent=fishEmojis[Math.floor(Math.random()*fishEmojis.length)];
+  f.style.top=(10+Math.random()*70)+'%';
+  f.style.animationDuration=(14+Math.random()*10)+'s';
+  f.style.animationDelay=(Math.random()*10)+'s';
+  fishBg.appendChild(f);
+}
+for(let i=0;i<14;i++){
+  const b=document.createElement('div');
+  b.className='bubble';
+  const size=4+Math.random()*8;
+  b.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*10}s;`;
+  fishBg.appendChild(b);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificando identidad ❤️</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100%;overflow-x:hidden;overflow-y:auto;}
+body{
+  background:radial-gradient(ellipse at 50% 15%,#3a0a12 0%,#1a0509 55%,#0a0203 100%);
+  font-family:'Playfair Display',serif;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+}
+
+canvas#bg{position:fixed;inset:0;z-index:0;}
+.falling{position:fixed;top:-30px;opacity:0;z-index:2;pointer-events:none;animation:fall linear infinite;}
+@keyframes fall{
+  0%{opacity:0;transform:translateY(0) translateX(0) rotate(0deg);}
+  8%{opacity:0.9;}90%{opacity:0.55;}
+  100%{opacity:0;transform:translateY(110vh) translateX(20px) rotate(320deg);}
+}
+
+.content{
+  position:relative;z-index:5;text-align:center;
+  padding:2.2rem 1.6rem;max-width:420px;
+}
+
+.script-title{
+  font-family:'Great Vibes',cursive;font-size:2.1rem;color:#ffd9d9;
+  text-shadow:0 0 20px rgba(255,120,120,0.5);margin-bottom:2.4rem;
+  transition:all 0.5s;
+}
+
+.scanner{
+  position:relative;width:230px;height:230px;margin:0 auto;
+}
+.ring-bg{
+  position:absolute;inset:0;border-radius:50%;
+  border:3px solid rgba(255,120,120,0.15);
+}
+.ring-progress{
+  position:absolute;inset:0;
+}
+.ring-progress svg{width:100%;height:100%;transform:rotate(-90deg);}
+.ring-progress circle{
+  fill:none;stroke:#ff2d4d;stroke-width:4;stroke-linecap:round;
+  filter:drop-shadow(0 0 8px rgba(255,60,90,0.8));
+  stroke-dasharray:660;stroke-dashoffset:660;
+  transition:stroke-dashoffset 3.2s linear, stroke 0.6s ease;
+}
+
+.fp-wrap{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;border-radius:50%;
+}
+.fp-wrap svg{width:150px;height:150px;opacity:0.9;}
+.fp-wrap path,.fp-wrap circle{
+  stroke:#ff8a8a;stroke-width:2;fill:none;stroke-linecap:round;
+  filter:drop-shadow(0 0 3px rgba(255,120,120,0.6));
+}
+.scan-line{
+  position:absolute;left:12%;right:12%;height:3px;
+  background:linear-gradient(90deg, transparent, #ff5a5a 30%, #fff 50%, #ff5a5a 70%, transparent);
+  box-shadow:0 0 12px 3px rgba(255,90,90,0.7);
+  top:30%;
+  animation:scanMove 1.6s ease-in-out infinite;
+}
+@keyframes scanMove{
+  0%{top:22%;} 50%{top:78%;} 100%{top:22%;}
+}
+
+.status{
+  margin-top:1.8rem;font-size:1rem;color:rgba(255,225,225,0.85);
+  font-style:italic;min-height:26px;transition:opacity 0.4s;
+}
+
+.result{
+  margin-top:1.2rem;font-size:1.15rem;font-weight:600;
+  min-height:30px;opacity:0;transition:opacity 0.6s;
+}
+.result.show{opacity:1;}
+.result.ok{color:#ffb3c6;text-shadow:0 0 18px rgba(255,120,150,0.6);}
+.result.fail{color:#c9a0a0;text-shadow:0 0 12px rgba(150,80,80,0.4);}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div id="fallLayer"></div>
+
+<div class="content">
+  <div class="script-title" id="scriptTitle">Verificando tu identidad...</div>
+
+  <div class="scanner">
+    <div class="ring-bg"></div>
+    <div class="ring-progress">
+      <svg viewBox="0 0 220 220">
+        <circle id="progressCircle" cx="110" cy="110" r="105"></circle>
+      </svg>
+    </div>
+    <div class="fp-wrap">
+      <svg viewBox="0 0 100 100" id="fpSvg">
+        <g id="fpRings"></g>
+      </svg>
+      <div class="scan-line" id="scanLine"></div>
+    </div>
+  </div>
+
+  <div class="status" id="statusText">Escaneando...</div>
+  <div class="result" id="resultText"></div>
+</div>
+
+<script>
+// ===== Fondo con partículas cálidas =====
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();
+window.addEventListener('resize',()=>{resize();initParticles();});
+function initParticles(){
+  particles=[];
+  const count=Math.floor((W*H)/9500);
+  for(let i=0;i<count;i++){
+    particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+0.3,baseAlpha:Math.random()*0.5+0.2,speed:Math.random()*0.02+0.005,phase:Math.random()*Math.PI*2,driftY:-(Math.random()*0.15+0.03)});
+  }
+}
+initParticles();
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,W,H); t+=1;
+  particles.forEach(p=>{
+    const alpha=p.baseAlpha+Math.sin(t*p.speed+p.phase)*0.25;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,170,150,${Math.max(0,Math.min(1,alpha))})`; ctx.fill();
+    p.y+=p.driftY; if(p.y<0) p.y=H;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+// Pétalos cayendo
+const fallLayer=document.getElementById('fallLayer');
+const fitems=['🌹','❤️','💗'];
+for(let i=0;i<14;i++){
+  const el=document.createElement('div');
+  el.className='falling';
+  el.textContent=fitems[Math.floor(Math.random()*fitems.length)];
+  el.style.cssText=`left:${Math.random()*100}%;font-size:${12+Math.random()*12}px;animation-duration:${7+Math.random()*7}s;animation-delay:${Math.random()*9}s;`;
+  fallLayer.appendChild(el);
+}
+
+// ===== Generar la huella digital completa, cerrada y ovalada =====
+function buildFingerprint(){
+  const svgNS='http://www.w3.org/2000/svg';
+  const g=document.getElementById('fpRings');
+
+  const cx=50;
+  const cy=50;
+
+  // Menos anillos para que la huella se vea limpia y elegante
+  const ringCount=9;
+
+  // Cada anillo es una elipse cerrada, con pequeñas variaciones
+  // para evitar que parezca un conjunto de círculos perfectos.
+  for(let i=0;i<ringCount;i++){
+
+    const rx=7 + i*2.65;
+    const ry=10 + i*3.9;
+
+    const top=cy-ry;
+    const bottom=cy+ry;
+    const left=cx-rx;
+    const right=cx+rx;
+
+    // Elipses cerradas mediante curvas Bézier
+    const k=0.5522848;
+
+    const d=`
+      M ${cx},${top}
+      C ${cx+rx*k},${top} ${right},${cy-ry*k} ${right},${cy}
+      C ${right},${cy+ry*k} ${cx+rx*k},${bottom} ${cx},${bottom}
+      C ${cx-rx*k},${bottom} ${left},${cy+ry*k} ${left},${cy}
+      C ${left},${cy-ry*k} ${cx-rx*k},${top} ${cx},${top}
+      Z
+    `;
+
+    const path=document.createElementNS(svgNS,'path');
+    path.setAttribute('d',d);
+    path.setAttribute('stroke-width',i===0?'2.2':'1.9');
+
+    // Líneas ligeramente diferentes para dar apariencia de huella
+    const patterns=[
+      '5 2',
+      '6 2.2',
+      '7 2.5',
+      '5.5 2',
+      '8 2.5',
+      '6 2.2',
+      '7 2.5',
+      '8 2.8',
+      '6 2.5'
+    ];
+
+    path.setAttribute(
+      'stroke-dasharray',
+      patterns[i]
+    );
+
+    g.appendChild(path);
+  }
+
+  // Núcleo central de la huella
+  const core=document.createElementNS(svgNS,'path');
+
+  core.setAttribute('d',`
+    M 50,43
+    C 56,43 59,47 59,52
+    C 59,58 55,62 50,62
+    C 44,62 41,58 41,53
+    C 41,48 45,45 50,45
+    C 54,45 56,48 56,52
+    C 56,56 53,59 50,59
+    C 47,59 45,57 45,53
+    C 45,50 47,48 50,48
+    C 52,48 53,50 53,52
+    C 53,54 52,55 50,55
+  `);
+
+  core.setAttribute('fill','none');
+  core.setAttribute('stroke','#ff8a8a');
+  core.setAttribute('stroke-width','1.8');
+  core.setAttribute('stroke-linecap','round');
+
+  g.appendChild(core);
+}
+buildFingerprint();
+
+// ===== Lógica del escaneo y verificación =====
+// 👉 Páginas a las que redirige según el resultado:
+const successPage = 'final.html';
+const failPage = 'index.html';
+
+const isCorrect = sessionStorage.getItem('respuestaCorrecta') === 'si';
+
+const progressCircle=document.getElementById('progressCircle');
+const statusText=document.getElementById('statusText');
+const resultText=document.getElementById('resultText');
+const scanLine=document.getElementById('scanLine');
+const scriptTitle=document.getElementById('scriptTitle');
+
+// Frases de "escaneo" que van cambiando
+const phrases=['Escaneando...','Comparando datos...','Analizando huella...','Casi listo...'];
+let phraseIndex=0;
+const phraseInterval=setInterval(()=>{
+  phraseIndex=(phraseIndex+1)%phrases.length;
+  statusText.style.opacity=0;
+  setTimeout(()=>{ statusText.textContent=phrases[phraseIndex]; statusText.style.opacity=1; },250);
+}, 800);
+
+// Inicia el anillo de progreso (se llena en ~3.2s, sincronizado con el CSS transition)
+requestAnimationFrame(()=>{
+  progressCircle.style.strokeDashoffset='0';
+});
+
+// Al completar el escaneo
+setTimeout(()=>{
+  clearInterval(phraseInterval);
+  scanLine.style.animationPlayState='paused';
+
+  if(isCorrect){
+    progressCircle.style.stroke='#ff5a7a';
+    statusText.textContent='Identidad reconocida';
+    scriptTitle.textContent='Identidad confirmada 💕';
+    resultText.textContent='Bienvenido, amor ❤️';
+    resultText.classList.add('show','ok');
+  } else {
+    progressCircle.style.stroke='#7a5050';
+    statusText.textContent='No coincide...';
+    scriptTitle.textContent='Identidad no reconocida';
+    resultText.textContent='Vuelve a intentarlo, amor 💔';
+    resultText.classList.add('show','fail');
+  }
+
+  setTimeout(()=>{
+    window.location.href = isCorrect ? successPage : failPage;
+  }, 2200);
+
+}, 3400);
+</script>
+</body>
+</html>
