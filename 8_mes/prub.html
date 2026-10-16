@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felices 8 Meses 🎃</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #0a0010;
+    overflow-x: hidden;
+    font-family: 'Lora', serif;
+  }
+
+  /* ── ESTRELLAS ── */
+  .stars {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--dur) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { from { opacity: 0.1; } to { opacity: 0.9; } }
+
+  /* ── CASTILLO DE FONDO ── */
+  .castle-bg {
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.18;
+  }
+
+  /* ── LUNA ── */
+  .moon {
+    position: fixed;
+    top: 60px; right: 80px;
+    width: 110px; height: 110px;
+    background: radial-gradient(circle at 35% 35%, #ffe97a, #f5a623);
+    border-radius: 50%;
+    box-shadow: 0 0 60px 20px rgba(245,166,35,0.35);
+    z-index: 2;
+    animation: moonGlow 4s ease-in-out infinite alternate;
+  }
+  @keyframes moonGlow {
+    from { box-shadow: 0 0 60px 20px rgba(245,166,35,0.3); }
+    to   { box-shadow: 0 0 90px 35px rgba(245,166,35,0.55); }
+  }
+
+  /* ── MURCIÉLAGOS ── */
+  .bat {
+    position: fixed;
+    z-index: 3;
+    font-size: 28px;
+    animation: fly var(--dur2) ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes fly {
+    from { transform: translate(0,0) rotate(-5deg); }
+    to   { transform: translate(var(--dx), var(--dy)) rotate(5deg); }
+  }
+
+  /* ── MURCIÉLAGOS CRUZANDO LA PANTALLA ── */
+  .bat-cross {
+    position: fixed;
+    z-index: 3;
+    font-size: 26px;
+    pointer-events: none;
+    animation: batCross linear infinite;
+  }
+  @keyframes batCross {
+    0%   { transform: translate(-10vw, 0) scale(0.8); opacity: 0; }
+    8%   { opacity: 0.9; }
+    50%  { transform: translate(55vw, -8vh) scale(1); }
+    92%  { opacity: 0.9; }
+    100% { transform: translate(115vw, 3vh) scale(0.85); opacity: 0; }
+  }
+
+  /* ── TELARAÑAS ── */
+  .web-svg {
+    position: fixed;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  /* ── CALABAZAS ── */
+  .pumpkin {
+    position: fixed;
+    bottom: 0;
+    font-size: var(--sz);
+    z-index: 4;
+    animation: pumpkinGlow 2.5s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes pumpkinGlow {
+    from { filter: drop-shadow(0 0 6px #ff8c00); }
+    to   { filter: drop-shadow(0 0 18px #ff4500); }
+  }
+
+  /* ── GATITO Y BRUJA ── */
+  .deco-fixed {
+    position: fixed;
+    z-index: 4;
+    font-size: var(--sz2);
+    pointer-events: none;
+    animation: float 3s ease-in-out infinite alternate;
+  }
+  @keyframes float {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-12px); }
+  }
+
+  /* ── CONTENIDO PRINCIPAL ── */
+  .page {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 120px;
+  }
+
+  .titulo-container {
+    background: rgba(30, 0, 50, 0.75);
+    border: 1.5px solid rgba(180, 80, 255, 0.4);
+    border-radius: 24px;
+    padding: 48px 52px;
+    max-width: 720px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 60px rgba(150,0,255,0.2), inset 0 0 40px rgba(100,0,180,0.1);
+    position: relative;
+  }
+
+  .titulo-container::before,
+  .titulo-container::after {
+    content: '🕸️';
+    font-size: 52px;
+    position: absolute;
+    top: -20px;
+  }
+  .titulo-container::before { left: -10px; }
+  .titulo-container::after  { right: -10px; }
+
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #7b00cc, #c800a1);
+    color: #ffe;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 22px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+  }
+
+  .titulo-principal {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 5vw, 44px);
+    color: #f5c6ff;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(200,0,255,0.6);
+  }
+
+  .corazon {
+    font-size: 38px;
+    animation: heartbeat 1.2s ease-in-out infinite;
+    display: inline-block;
+    margin: 8px 0 20px;
+  }
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.25); }
+  }
+
+  .poema {
+    color: #e8c4ff;
+    font-style: italic;
+    font-size: clamp(15px, 2.2vw, 18px);
+    line-height: 2;
+    text-shadow: 0 0 12px rgba(180,100,255,0.4);
+  }
+
+  .poema .linea {
+    display: block;
+    animation: fadeIn 0.8s ease both;
+  }
+  .poema .linea:nth-child(1) { animation-delay: 0.2s; }
+  .poema .linea:nth-child(2) { animation-delay: 0.5s; }
+  .poema .linea:nth-child(3) { animation-delay: 0.8s; }
+  .poema .linea:nth-child(4) { animation-delay: 1.1s; }
+  .poema .linea:nth-child(5) { animation-delay: 1.4s; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, #c840ff, transparent);
+    margin: 24px auto;
+  }
+
+  /* ── BOTÓN ── */
+  .btn-siguiente {
+    margin-top: 48px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #6b00cc 0%, #c800a1 100%);
+    color: #fff;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    padding: 16px 40px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 30px rgba(180,0,255,0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: pulseBtn 2.5s ease-in-out infinite;
+  }
+  .btn-siguiente:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 50px rgba(200,0,255,0.75);
+  }
+  @keyframes pulseBtn {
+    0%,100% { box-shadow: 0 0 30px rgba(180,0,255,0.5); }
+    50%      { box-shadow: 0 0 55px rgba(200,0,255,0.8); }
+  }
+
+  /* ── PARTÍCULAS MÁGICAS ── */
+  .spark {
+    position: fixed;
+    pointer-events: none;
+    z-index: 5;
+    border-radius: 50%;
+    animation: sparkFly var(--sd) linear infinite;
+  }
+  @keyframes sparkFly {
+    0%   { transform: translateY(0) scale(1); opacity: 0.9; }
+    100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+  }
+
+  /* ── PÁGINA 2 (CUBO) ── */
+  #pagina2 {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #060010;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  #pagina2 .stars2 {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .p2-header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 28px 20px 10px;
+  }
+  .p2-header h2 {
+    font-family: 'Cinzel', serif;
+    color: #f0c0ff;
+    font-size: clamp(18px, 3.5vw, 28px);
+    text-shadow: 0 0 20px rgba(200,0,255,0.5);
+  }
+  .p2-header p {
+    color: rgba(200,160,255,0.7);
+    font-size: 13px;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* ── CUBO 3D ── */
+  .scene {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 180px);
+    perspective: 900px;
+  }
+
+  .cube-wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    transform-style: preserve-3d;
+  }
+
+  .cube {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(30deg);
+    transition: transform 0.05s linear;
+    cursor: grab;
+  }
+  .cube:active { cursor: grabbing; }
+
+  .face {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 2px solid rgba(180,80,255,0.5);
+    border-radius: 12px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .face img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* placeholder cuando no hay imagen */
+  .face-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #1a0030, #2d004a);
+  }
+  .face-placeholder .movie-emoji { font-size: 52px; }
+  .face-placeholder .movie-title {
+    color: #e0b0ff;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  .face-overlay {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    background: linear-gradient(to top, rgba(20,0,40,0.96) 0%, rgba(20,0,40,0.7) 60%, transparent 100%);
+    padding: 16px 14px 18px;
+    text-align: center;
+  }
+
+  .face-overlay .pelicula {
+    color: #d890ff;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .face-overlay .frase {
+    color: #f0e0ff;
+    font-style: italic;
+    font-size: 11.5px;
+    line-height: 1.55;
+  }
+
+  /* posición de cada cara */
+  .face-front  { transform: translateZ(150px); }
+  .face-back   { transform: rotateY(180deg) translateZ(150px); }
+  .face-left   { transform: rotateY(-90deg) translateZ(150px); }
+  .face-right  { transform: rotateY(90deg) translateZ(150px); }
+  .face-top    { transform: rotateX(90deg) translateZ(150px); }
+  .face-bottom { transform: rotateX(-90deg) translateZ(150px); }
+
+  .hint {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(180,120,255,0.55);
+    font-size: 12px;
+    letter-spacing: 1px;
+    animation: hintPulse 2s ease-in-out infinite alternate;
+    white-space: nowrap;
+  }
+  @keyframes hintPulse {
+    from { opacity: 0.4; }
+    to   { opacity: 0.9; }
+  }
+
+  .btn-volver {
+    position: absolute;
+    top: 18px; left: 20px;
+    background: rgba(80,0,120,0.6);
+    border: 1px solid rgba(180,80,255,0.4);
+    color: #d0a0ff;
+    font-size: 13px;
+    padding: 8px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 20;
+    font-family: 'Lora', serif;
+    transition: background 0.2s;
+  }
+  .btn-volver:hover { background: rgba(120,0,180,0.8); }
+
+  /* ── BOTÓN DE MÚSICA (persistente en ambas páginas) ── */
+  #musicBtn {
+    position: fixed;
+    top: 18px; right: 20px;
+    z-index: 200;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: rgba(80,0,120,0.6);
+    border: 1px solid rgba(180,80,255,0.45);
+    color: #e0b0ff;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  #musicBtn:hover { background: rgba(120,0,180,0.8); }
+
+  /* ── CALAVERAS DECO BOTTOM ── */
+  .skull-row {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10px;
+    z-index: 6;
+    pointer-events: none;
+    font-size: 22px;
+    opacity: 0.45;
+    line-height: 1;
+  }
+
+  /* ══════════════════════════════════════════════
+     ✉️ NOTA DE LUCÍA PARA DANIEL (NUEVO)
+     ══════════════════════════════════════════════ */
+  .nota {
+    margin: 30px auto 0;
+    max-width: 340px;
+    padding: 16px 22px;
+    background: rgba(60, 0, 100, 0.45);
+    border: 1px dashed rgba(220, 150, 255, 0.55);
+    border-radius: 16px;
+    box-shadow: 0 0 24px rgba(180, 0, 255, 0.18);
+    animation: fadeIn 0.8s ease 1.8s both;
+  }
+  .nota .nota-para {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    color: #f5c6ff;
+    text-shadow: 0 0 14px rgba(200, 0, 255, 0.5);
+  }
+  .nota .nota-de {
+    display: block;
+    margin-top: 8px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #e8c4ff;
+  }
+
+  /* ══════════════════════════════════════════════
+     📱 DISEÑO RESPONSIVO (NUEVO)
+     Solo se agregan reglas; no se cambia nada de lo anterior
+     ══════════════════════════════════════════════ */
+
+  /* Pantallas muy grandes: cubo un poco más grande */
+  @media (min-width: 1400px) and (min-height: 800px) {
+    .cube-wrapper { transform: scale(1.25); }
+  }
+
+  /* Tablets */
+  @media (max-width: 900px) {
+    .moon { top: 70px; right: 40px; width: 90px; height: 90px; }
+    .titulo-container { padding: 40px 36px; max-width: 92%; }
+    .web-svg { width: 150px !important; height: 150px !important; }
+  }
+
+  /* Celulares */
+  @media (max-width: 600px) {
+    .moon { top: 74px; right: 16px; width: 60px; height: 60px; box-shadow: 0 0 30px 10px rgba(245,166,35,0.3); }
+    .bat { font-size: 22px; }
+    .bat-cross { font-size: 20px; }
+    .web-svg { width: 110px !important; height: 110px !important; }
+
+    .page { padding: 70px 14px 110px; }
+    .titulo-container { padding: 34px 20px; border-radius: 20px; max-width: 100%; }
+    .titulo-container::before,
+    .titulo-container::after { font-size: 36px; top: -14px; }
+    .titulo-container::before { left: -4px; }
+    .titulo-container::after  { right: -4px; }
+
+    .badge { font-size: 10px; letter-spacing: 1.5px; padding: 6px 14px; margin-bottom: 18px; }
+    .corazon { font-size: 30px; margin: 4px 0 14px; }
+    .divider { margin: 18px auto; }
+    .poema { line-height: 1.8; }
+
+    .nota { margin-top: 22px; padding: 14px 16px; max-width: 280px; }
+    .nota .nota-para { font-size: 13px; }
+    .nota .nota-de { font-size: 14px; }
+
+    .btn-siguiente { margin-top: 30px; font-size: 13px; padding: 14px 24px; letter-spacing: 1px; }
+
+    .pumpkin { font-size: calc(var(--sz) * 0.7); }
+    .deco-fixed { font-size: calc(var(--sz2) * 0.7); }
+    .skull-row { font-size: 16px; }
+
+    /* Página 2 */
+    .p2-header { padding: 70px 16px 6px; }
+    .p2-header p { font-size: 11px; }
+    .btn-volver { top: 14px; left: 14px; font-size: 12px; padding: 7px 14px; }
+    #musicBtn { top: 12px; right: 14px; width: 40px; height: 40px; font-size: 14px; }
+    .cube-wrapper { transform: scale(0.8); }
+  }
+
+  /* Celulares muy pequeños */
+  @media (max-width: 380px) {
+    .cube-wrapper { transform: scale(0.68); }
+    .titulo-container { padding: 30px 14px; }
+  }
+
+  /* Celulares/tablets en horizontal (poca altura) */
+  @media (max-height: 560px) {
+    .p2-header { padding: 14px 16px 4px; }
+    .p2-header p { display: none; }
+    .scene { height: calc(100vh - 70px); }
+    .cube-wrapper { transform: scale(0.6); }
+    .page { padding: 50px 20px 90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ MÚSICA DE FONDO ══════════ -->
+<button id="musicBtn">▶</button>
+<!-- 👉 Reemplaza el nombre del archivo por tu canción -->
+<audio id="bgMusic" src="soundtrack.mp3" loop></audio>
+
+<!-- ══════════ ESTRELLAS ══════════ -->
+<div class="stars" id="stars"></div>
+
+<!-- ══════════ LUNA ══════════ -->
+<div class="moon"></div>
+
+<!-- ══════════ MURCIÉLAGOS ══════════ -->
+<div class="bat" style="--dur2:4s;--dx:-30px;--dy:20px;top:12%;left:8%;">🦇</div>
+<div class="bat" style="--dur2:5.5s;--dx:40px;--dy:-25px;top:18%;right:14%;">🦇</div>
+<div class="bat" style="--dur2:3.8s;--dx:-20px;--dy:15px;top:30%;left:22%;">🦇</div>
+<div class="bat" style="--dur2:6s;--dx:25px;--dy:20px;top:8%;right:35%;">🦇</div>
+
+<!-- ══════════ MURCIÉLAGOS CRUZANDO LA PANTALLA ══════════ -->
+<div class="bat-cross" style="top:15%;animation-duration:9s;animation-delay:0.5s;">🦇</div>
+<div class="bat-cross" style="top:28%;animation-duration:11s;animation-delay:3s;">🦇</div>
+<div class="bat-cross" style="top:40%;animation-duration:8s;animation-delay:6s;">🦇</div>
+
+<!-- ══════════ TELARAÑAS ══════════ -->
+<svg class="web-svg" style="top:0;left:0;width:200px;height:200px;" viewBox="0 0 200 200">
+  <g stroke="#a060d0" stroke-width="0.8" fill="none">
+    <line x1="0" y1="0" x2="200" y2="200"/>
+    <line x1="0" y1="0" x2="0" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="0"/>
+    <line x1="0" y1="0" x2="200" y2="100"/>
+    <line x1="0" y1="0" x2="100" y2="200"/>
+    <ellipse cx="0" cy="0" rx="50" ry="50"/><ellipse cx="0" cy="0" rx="100" ry="100"/>
+    <ellipse cx="0" cy="0" rx="150" ry="150"/><ellipse cx="0" cy="0" rx="200" ry="200"/>
+  </g>
+  <circle cx="50" cy="70" r="5" fill="#1a0030" stroke="#a060d0" stroke-width="1"/>
+  <line x1="50" y1="60" x2="50" y2="40" stroke="#a060d0" stroke-width="0.8"/>
+</svg>
+<svg class="web-svg" style="top:0;right:0;width:200px;height:200px;transform:scaleX(-1);" viewBox="0 0 200 200">
+  <g stroke="#a060d0" stroke-width="0.8" fill="none">
+    <line x1="0" y1="0" x2="200" y2="200"/>
+    <line x1="0" y1="0" x2="0" y2="200"/>
+    <line x1="0" y1="0" x2="200" y2="0"/>
+    <line x1="0" y1="0" x2="200" y2="100"/>
+    <ellipse cx="0" cy="0" rx="60" ry="60"/><ellipse cx="0" cy="0" rx="120" ry="120"/>
+    <ellipse cx="0" cy="0" rx="180" ry="180"/>
+  </g>
+  <circle cx="80" cy="50" r="5" fill="#1a0030" stroke="#a060d0" stroke-width="1"/>
+  <line x1="80" y1="45" x2="80" y2="25" stroke="#a060d0" stroke-width="0.8"/>
+</svg>
+
+<!-- ══════════ CASTILLO SVG ══════════ -->
+<svg class="castle-bg" viewBox="0 0 900 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 400 Q225 200 450 280 Q675 360 900 400Z" fill="#1a0028"/>
+  <rect x="330" y="180" width="240" height="220" fill="#12001e"/>
+  <path d="M415 400 L415 310 Q450 280 485 310 L485 400Z" fill="#0a0010"/>
+  <ellipse cx="450" cy="240" rx="18" ry="22" fill="#ff8c00" opacity="0.5"/>
+  <rect x="290" y="210" width="60" height="190" fill="#0e0018"/>
+  <rect x="550" y="210" width="60" height="190" fill="#0e0018"/>
+  <rect x="290" y="200" width="12" height="20" fill="#0e0018"/>
+  <rect x="306" y="200" width="12" height="20" fill="#0e0018"/>
+  <rect x="322" y="200" width="12" height="20" fill="#0e0018"/>
+  <rect x="550" y="200" width="12" height="20" fill="#0e0018"/>
+  <rect x="566" y="200" width="12" height="20" fill="#0e0018"/>
+  <rect x="582" y="200" width="12" height="20" fill="#0e0018"/>
+  <rect x="338" y="168" width="14" height="20" fill="#12001e"/>
+  <rect x="360" y="168" width="14" height="20" fill="#12001e"/>
+  <rect x="382" y="168" width="14" height="20" fill="#12001e"/>
+  <rect x="504" y="168" width="14" height="20" fill="#12001e"/>
+  <rect x="526" y="168" width="14" height="20" fill="#12001e"/>
+  <rect x="548" y="168" width="14" height="20" fill="#12001e"/>
+  <rect x="420" y="100" width="60" height="100" fill="#0e0018"/>
+  <polygon points="420,100 450,50 480,100" fill="#1a0028"/>
+  <rect x="434" y="112" width="14" height="18" fill="#ff8c00" opacity="0.45"/>
+  <ellipse cx="320" cy="260" rx="10" ry="14" fill="#ff8c00" opacity="0.35"/>
+  <ellipse cx="580" cy="260" rx="10" ry="14" fill="#ff8c00" opacity="0.35"/>
+</svg>
+
+<!-- ══════════ CALABAZAS ══════════ -->
+<div class="pumpkin" style="--sz:52px;left:3%;">🎃</div>
+<div class="pumpkin" style="--sz:38px;left:12%;animation-delay:0.5s;">🎃</div>
+<div class="pumpkin" style="--sz:60px;right:5%;">🎃</div>
+<div class="pumpkin" style="--sz:34px;right:16%;animation-delay:1s;">🎃</div>
+<div class="pumpkin" style="--sz:28px;left:28%;animation-delay:0.3s;">🎃</div>
+
+<!-- ══════════ BRUJA Y GATO ══════════ -->
+<div class="deco-fixed" style="--sz2:48px;bottom:10px;left:20%;animation-delay:0.5s;">🧙‍♀️</div>
+<div class="deco-fixed" style="--sz2:42px;bottom:8px;right:22%;animation-delay:1s;">🐈‍⬛</div>
+
+<!-- ══════════ CALAVERAS ══════════ -->
+<div class="skull-row">
+  💀🕯️💀🕯️💀🕯️💀🕯️💀🕯️💀🕯️💀🕯️💀🕯️💀
+</div>
+
+<!-- ══════════ PÁGINA 1 ══════════ -->
+<div class="page" id="pagina1">
+  <div class="titulo-container">
+    <div class="badge">🎃 22 de Octubre 2026 · 8 Meses 🎃</div>
+    <h1 class="titulo-principal">Felices 8 Meses,<br>mi amor 👻 Te amo</h1>
+    <div class="corazon">🖤</div>
+    <div class="divider"></div>
+    <p class="poema">
+      <span class="linea">Prefiero ser un fantasma recorriendo la noche a tu lado,</span>
+      <span class="linea">abrazando tu risa como mi refugio favorito,</span>
+      <span class="linea">que existir en un mundo donde tú no estés.</span>
+      <span class="linea">Mi alma encontró su hogar en tus brazos,</span>
+      <span class="linea">y ya jamás querrá irse de tu lado. 🕯️</span>
+    </p>
+    <div class="divider"></div>
+
+    <!-- ✉️ NOTA (NUEVO) -->
+    <div class="nota">
+      <span class="nota-para">✉️ Para: Daniel Mahecha</span>
+      <span class="nota-de">con todo mi amor, Lucía Torres 🖤</span>
+    </div>
+
+    <a class="btn-siguiente" onclick="mostrarPagina2()">
+       Ver la magia de Halloween ✨
+    </a>
+  </div>
+</div>
+
+<!-- ══════════ PÁGINA 2 — CUBO ══════════ -->
+<div id="pagina2">
+  <div class="stars2" id="stars2"></div>
+  <button class="btn-volver" onclick="mostrarPagina1()">← Volver</button>
+  <div class="p2-header">
+    <h2>🎬 Nuestro Halloween de película 🎬</h2>
+    <p>Arrastra el cubo para descubrir cada historia</p>
+  </div>
+  <div class="scene">
+    <div class="cube-wrapper" id="cubeWrapper">
+      <div class="cube" id="cube">
+
+        <div class="face face-front">
+          <div class="face-placeholder">
+            <div class="s4-face"><img src="imgs/cadvnovia.jpeg" onerror="this.style.display='none'"></div>
+          </div>
+          <div class="face-overlay">
+            <div class="pelicula">El cadáver de la novia🕯️</div>
+            <div class="frase">"Si no eres el amor de mi vida, diré que me equivoqué de vida, pero no de amor"</div>
+          </div>
+        </div>
+
+        <div class="face face-back">
+          <div class="face-placeholder">
+            <div class="s4-face"><img src="imgs/coraline.jpeg" onerror="this.style.display='none'"></div>
+          </div>
+          <div class="face-overlay">
+            <div class="pelicula">Coraline y la puerta secreta🔵</div>
+            <div class="frase">"Cruzaría mil puertas y enfrentaría lo que sea para encontrarte a ti."</div>
+          </div>
+        </div>
+
+        <div class="face face-left">
+          <div class="face-placeholder">
+            <div class="s4-face"><img src="imgs/jacksk.jpg" onerror="this.style.display='none'"></div>
+          </div>
+          <div class="face-overlay">
+            <div class="pelicula">El extraño mundo de Jack🌙</div>
+            <div class="frase">"El destino escribe historias, pero el mío se quedó contigo desde la noche en que nuestras almas bailaron bajo la misma luna."</div>
+          </div>
+        </div>
+
+        <div class="face face-right">
+          <div class="face-placeholder">
+            <div class="s4-face"><img src="imgs/overgar.jpeg" onerror="this.style.display='none'"></div>
+          </div>
+          <div class="face-overlay">
+            <div class="pelicula">Más allá del jardín🌿</div>
+            <div class="frase">"Incluso en la oscuridad y en los caminos más extraños, caminar contigo de la mano me da la seguridad para volver a casa."</div>
+          </div>
+        </div>
+
+        <div class="face face-top">
+          <div class="face-placeholder">
+            <div class="s4-face"><img src="imgs/paran.jpeg" onerror="this.style.display='none'"></div>
+          </div>
+          <div class="face-overlay">
+            <div class="pelicula">ParaNorman🧟</div>
+            <div class="frase">"No importa cuán raros nos crean, mi lugar favorito en este mundo siempre será junto a tí."</div>
+          </div>
+        </div>
+
+        <div class="face face-bottom">
+          <div class="face-placeholder">
+            <div class="s4-face"><img src="imgs/hotrans.jpg" onerror="this.style.display='none'"></div>
+          </div>
+          <div class="face-overlay">
+            <div class="pelicula">Hotel Transilvania🧛</div>
+            <div class="frase">"Conectamos desde el primer momento como si fuera magia; contra todo pronóstico, terminaste siendo mi persona favorita... 'Mi clic'"</div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function crearEstrellas(contenedor, cantidad) {
+  for (let i = 0; i < cantidad; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${sz}px; height:${sz}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      --dur:${(Math.random()*3+1.5).toFixed(1)}s;
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    contenedor.appendChild(s);
+  }
+}
+crearEstrellas(document.getElementById('stars'), 180);
+
+/* ── MÚSICA DE FONDO (persistente en ambas páginas) ── */
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+let playing = false;
+
+function removeUnlockListeners() {
+  document.removeEventListener('click', unlockOnFirstInteraction);
+  document.removeEventListener('touchstart', unlockOnFirstInteraction);
+}
+function startMusic() {
+  bgMusic.play().then(() => {
+    playing = true;
+    musicBtn.textContent = '❚❚';
+    removeUnlockListeners();
+  }).catch(() => {
+    // El navegador bloqueó el autoplay; esperamos la primera interacción
+  });
+}
+startMusic();
+function unlockOnFirstInteraction() {
+  if (!playing) { startMusic(); }
+  removeUnlockListeners();
+}
+document.addEventListener('click', unlockOnFirstInteraction);
+document.addEventListener('touchstart', unlockOnFirstInteraction);
+
+musicBtn.addEventListener('click', () => {
+  playing = !playing;
+  musicBtn.textContent = playing ? '❚❚' : '▶';
+  if (playing) { bgMusic.play().catch(() => {}); } else { bgMusic.pause(); }
+  removeUnlockListeners();
+});
+
+function crearSpark() {
+  const s = document.createElement('div');
+  s.className = 'spark';
+  const colores = ['#c840ff','#ff5fc4','#ffe066','#ff8c00','#60d0ff'];
+  const sz = Math.random()*5+2;
+  s.style.cssText = `
+    width:${sz}px; height:${sz}px;
+    left:${Math.random()*100}vw;
+    bottom:-10px;
+    background:${colores[Math.floor(Math.random()*colores.length)]};
+    --sd:${(Math.random()*6+4).toFixed(1)}s;
+    animation-delay:${(Math.random()*6).toFixed(1)}s;
+  `;
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 12000);
+}
+setInterval(crearSpark, 600);
+
+function mostrarPagina2() {
+  document.getElementById('pagina2').style.display = 'block';
+  crearEstrellas(document.getElementById('stars2'), 200);
+  requestAnimationFrame(() => {
+    document.getElementById('pagina2').style.opacity = '1';
+  });
+}
+function mostrarPagina1() {
+  document.getElementById('pagina2').style.display = 'none';
+}
+
+const cube = document.getElementById('cube');
+let isDragging = false, startX, startY, rotX = -20, rotY = 30;
+let autoRot = true, autoTimer;
+
+function autoRotate() {
+  if (!autoRot) return;
+  rotY += 0.4;
+  cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  requestAnimationFrame(autoRotate);
+}
+autoRotate();
+
+const wrapper = document.getElementById('cubeWrapper');
+
+wrapper.addEventListener('mousedown', e => {
+  isDragging = true; autoRot = false;
+  startX = e.clientX; startY = e.clientY;
+  cube.style.transition = 'none';
+});
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+  rotY += dx * 0.5; rotX -= dy * 0.5;
+  cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  startX = e.clientX; startY = e.clientY;
+});
+window.addEventListener('mouseup', () => {
+  if (!isDragging) return;
+  isDragging = false;
+  clearTimeout(autoTimer);
+  autoTimer = setTimeout(() => { autoRot = true; autoRotate(); }, 3000);
+});
+
+wrapper.addEventListener('touchstart', e => {
+  autoRot = false;
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  cube.style.transition = 'none';
+}, { passive: true });
+wrapper.addEventListener('touchmove', e => {
+  const dx = e.touches[0].clientX - startX;
+  const dy = e.touches[0].clientY - startY;
+  rotY += dx * 0.5; rotX -= dy * 0.5;
+  cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+}, { passive: true });
+wrapper.addEventListener('touchend', () => {
+  autoTimer = setTimeout(() => { autoRot = true; autoRotate(); }, 3000);
+});
+</script>
+</body>
+</html>

@@ -463,6 +463,105 @@
     opacity: 0.45;
     line-height: 1;
   }
+
+  /* ══════════════════════════════════════════════
+     ✉️ NOTA DE LUCÍA PARA DANIEL (NUEVO)
+     ══════════════════════════════════════════════ */
+  .nota {
+    margin: 30px auto 0;
+    max-width: 340px;
+    padding: 16px 22px;
+    background: rgba(60, 0, 100, 0.45);
+    border: 1px dashed rgba(220, 150, 255, 0.55);
+    border-radius: 16px;
+    box-shadow: 0 0 24px rgba(180, 0, 255, 0.18);
+    animation: fadeIn 0.8s ease 1.8s both;
+  }
+  .nota .nota-para {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    color: #f5c6ff;
+    text-shadow: 0 0 14px rgba(200, 0, 255, 0.5);
+  }
+  .nota .nota-de {
+    display: block;
+    margin-top: 8px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #e8c4ff;
+  }
+
+  /* ══════════════════════════════════════════════
+     📱 DISEÑO RESPONSIVO (NUEVO)
+     Solo se agregan reglas; no se cambia nada de lo anterior
+     ══════════════════════════════════════════════ */
+
+  /* Pantallas muy grandes: cubo un poco más grande */
+  @media (min-width: 1400px) and (min-height: 800px) {
+    .cube-wrapper { transform: scale(1.25); }
+  }
+
+  /* Tablets */
+  @media (max-width: 900px) {
+    .moon { top: 70px; right: 40px; width: 90px; height: 90px; }
+    .titulo-container { padding: 40px 36px; max-width: 92%; }
+    .web-svg { width: 150px !important; height: 150px !important; }
+  }
+
+  /* Celulares */
+  @media (max-width: 600px) {
+    .moon { top: 74px; right: 16px; width: 60px; height: 60px; box-shadow: 0 0 30px 10px rgba(245,166,35,0.3); }
+    .bat { font-size: 22px; }
+    .bat-cross { font-size: 20px; }
+    .web-svg { width: 110px !important; height: 110px !important; }
+
+    .page { padding: 70px 14px 110px; }
+    .titulo-container { padding: 34px 20px; border-radius: 20px; max-width: 100%; }
+    .titulo-container::before,
+    .titulo-container::after { font-size: 36px; top: -14px; }
+    .titulo-container::before { left: -4px; }
+    .titulo-container::after  { right: -4px; }
+
+    .badge { font-size: 10px; letter-spacing: 1.5px; padding: 6px 14px; margin-bottom: 18px; }
+    .corazon { font-size: 30px; margin: 4px 0 14px; }
+    .divider { margin: 18px auto; }
+    .poema { line-height: 1.8; }
+
+    .nota { margin-top: 22px; padding: 14px 16px; max-width: 280px; }
+    .nota .nota-para { font-size: 13px; }
+    .nota .nota-de { font-size: 14px; }
+
+    .btn-siguiente { margin-top: 30px; font-size: 13px; padding: 14px 24px; letter-spacing: 1px; }
+
+    .pumpkin { font-size: calc(var(--sz) * 0.7); }
+    .deco-fixed { font-size: calc(var(--sz2) * 0.7); }
+    .skull-row { font-size: 16px; }
+
+    /* Página 2 */
+    .p2-header { padding: 70px 16px 6px; }
+    .p2-header p { font-size: 11px; }
+    .btn-volver { top: 14px; left: 14px; font-size: 12px; padding: 7px 14px; }
+    #musicBtn { top: 12px; right: 14px; width: 40px; height: 40px; font-size: 14px; }
+    .cube-wrapper { transform: scale(0.8); }
+  }
+
+  /* Celulares muy pequeños */
+  @media (max-width: 380px) {
+    .cube-wrapper { transform: scale(0.68); }
+    .titulo-container { padding: 30px 14px; }
+  }
+
+  /* Celulares/tablets en horizontal (poca altura) */
+  @media (max-height: 560px) {
+    .p2-header { padding: 14px 16px 4px; }
+    .p2-header p { display: none; }
+    .scene { height: calc(100vh - 70px); }
+    .cube-wrapper { transform: scale(0.6); }
+    .page { padding: 50px 20px 90px; }
+  }
 </style>
 </head>
 <body>
@@ -574,6 +673,13 @@
       <span class="linea">y ya jamás querrá irse de tu lado. 🕯️</span>
     </p>
     <div class="divider"></div>
+
+    <!-- NOTA -->
+    <div class="nota">
+      <span class="nota-para">Para: Daniel Mahecha</span>
+      <span class="nota-de">con todo mi amor, Lucía Torres</span>
+    </div>
+
     <a class="btn-siguiente" onclick="mostrarPagina2()">
        Ver la magia de Halloween ✨
     </a>
